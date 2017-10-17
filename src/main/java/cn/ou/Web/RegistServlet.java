@@ -1,6 +1,7 @@
 package cn.ou.Web;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,11 +12,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.ou.Util.JDBCUtils;
+import org.apache.commons.beanutils.BeanUtils;
+
+import cn.ou.Util.DaoUtils;
+import cn.ou.Util.MDUtil;
 import cn.ou.Util.WebUtils;
+import cn.ou.entity.User;
+import cn.ou.exception.MsgException;
+import cn.ou.service.UserService;
+import cn.ou.service.UserServlet;
+import cn.ou.service.impl.UserServiceImpl;
 
 /**
- * ×¢²á°´Å¥´¥·¢µÄºóÌ¨²Ù×÷
+ * æ³¨å†ŒæŒ‰é’®è§¦å‘çš„åå°æ“ä½œ
  * @author Administrator
  *
  */
@@ -23,185 +32,119 @@ public class RegistServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//1.½â¾öÂÒÂë
-		//1.1½â¾öÇëÇó²ÎÊıÂÒÂë£¨postÌá½»£©
+		//1.è§£å†³ä¹±ç 
+		//1.1è§£å†³è¯·æ±‚å‚æ•°ä¹±ç ï¼ˆpostæäº¤ï¼‰
 		request.setCharacterEncoding("utf-8");
-		//1.2½â¾öÏìÓ¦ÕıÎÄÂÒÂë
+		//1.2è§£å†³å“åº”æ­£æ–‡ä¹±ç 
 		response.setContentType("text/html;charset=utf-8");
 		
-		//2.»ñÈ¡ÓÃ»§²ÎÊı
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String password2 = request.getParameter("password2");
-		String nickname = request.getParameter("nickname");
-		String email = request.getParameter("email");
-		String phonenumber = request.getParameter("phonenumber");
-		String smsvalistr = request.getParameter("smsvalistr");
-		String valistr = request.getParameter("valistr");
-		
-		//3.Êı¾İĞ£Ñé£¨½«ĞÅÏ¢ÏìÓ¦µ½Ç°¶Ë£©
-		//3.1.ÅĞ¶Ï²ÎÊıÊÇ·ñÎª¿Õ£¬Èç¹ûÎª¿Õ£¬ÇëÇó×ª·¢»Øµ½×¢²áÒ³Ãæ
-		if(WebUtils.isNull(username)){
-			//Èç¹ûÓÃ»§ÃûÎª¿Õ£¬Ìø×ª»Ø×¢²áÒ³ÃæÌáÊ¾ÓÃ»§¡°ÓÃ»§Ãû²»ÄÜÎª¿Õ£¡¡±
-			request.setAttribute("msg", "ÓÃ»§Ãû²»ÄÜÎª¿Õ£¡");
+		//2.è·å–ç”¨æˆ·å‚æ•°(ç”¨æˆ·çš„æ³¨å†Œä¿¡æ¯)
+		User user = new User();
+		/*
+		 * key		value
+		 * String	String[]
+		 * username	{"abc"}
+		 */
+		//é¡µé¢ä¸­è¡¨å•é¡¹ name å±æ€§çš„å€¼ä¸€å®šè¦å’ŒUserç±»ä¸­å±æ€§åä¸€æ ·
+		BeanUtils.populate(user, request.getParameterMap());
+		//3.æ•°æ®æ ¡éªŒï¼ˆå°†ä¿¡æ¯å“åº”åˆ°å‰ç«¯ï¼‰
+		//è°ƒç”¨userä¸­çš„éç©ºæ ¡éªŒæ–¹æ³•ï¼Œæ¥æŠ›å‡ºè‡ªå®šä¹‰å¼‚å¸¸æç¤ºä¿¡æ¯
+		try {
+			user.check();
+		} catch (MsgException e) {
+			//è·³è½¬åˆ°æ³¨å†Œé¡µé¢
+			request.setAttribute("msg", e.getMessage());
 			request.getRequestDispatcher("/regist.jsp").forward(request, response);
-			return;
-		}
-		if(WebUtils.isNull(password)){
-			//Èç¹ûÓÃ»§ÃûÎª¿Õ£¬Ìø×ª»Ø×¢²áÒ³ÃæÌáÊ¾ÓÃ»§¡°ÓÃ»§Ãû²»ÄÜÎª¿Õ£¡¡±
-			request.setAttribute("msg", "ÃÜÂë²»ÄÜÎª¿Õ£¡");
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);
-			return;
-		}
-		if(WebUtils.isNull(password2)){
-			//Èç¹ûÓÃ»§ÃûÎª¿Õ£¬Ìø×ª»Ø×¢²áÒ³ÃæÌáÊ¾ÓÃ»§¡°ÓÃ»§Ãû²»ÄÜÎª¿Õ£¡¡±
-			request.setAttribute("msg", "È·ÈÏÃÜÂë²»ÄÜÎª¿Õ£¡");
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);
-			return;
-		}
-		if(WebUtils.isNull(nickname)){
-			//Èç¹ûÓÃ»§ÃûÎª¿Õ£¬Ìø×ª»Ø×¢²áÒ³ÃæÌáÊ¾ÓÃ»§¡°ÓÃ»§Ãû²»ÄÜÎª¿Õ£¡¡±
-			request.setAttribute("msg", "ÄØ³Æ²»ÄÜÎª¿Õ£¡");
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);
-			return;
-		}
-		if(WebUtils.isNull(email)){
-			//Èç¹ûÓÃ»§ÃûÎª¿Õ£¬Ìø×ª»Ø×¢²áÒ³ÃæÌáÊ¾ÓÃ»§¡°ÓÃ»§Ãû²»ÄÜÎª¿Õ£¡¡±
-			request.setAttribute("msg", "ÓÊÏä²»ÄÜÎª¿Õ£¡");
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);
-			return;
-		}
-		if(WebUtils.isNull(phonenumber)){
-			//Èç¹ûÓÃ»§ÃûÎª¿Õ£¬Ìø×ª»Ø×¢²áÒ³ÃæÌáÊ¾ÓÃ»§¡°ÓÃ»§Ãû²»ÄÜÎª¿Õ£¡¡±
-			request.setAttribute("msg", "ÊÖ»úºÅÂë²»ÄÜÎª¿Õ£¡");
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);
-			return;
-		}
-		if(WebUtils.isNull(smsvalistr)){
-			//Èç¹ûÓÃ»§ÃûÎª¿Õ£¬Ìø×ª»Ø×¢²áÒ³ÃæÌáÊ¾ÓÃ»§¡°ÓÃ»§Ãû²»ÄÜÎª¿Õ£¡¡±
-			request.setAttribute("msg", "¶ÌĞÅÑéÖ¤Âë²»ÄÜÎª¿Õ£¡");
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);
-			return;
-		}
-		if(WebUtils.isNull(valistr)){
-			//Èç¹ûÓÃ»§ÃûÎª¿Õ£¬Ìø×ª»Ø×¢²áÒ³ÃæÌáÊ¾ÓÃ»§¡°ÓÃ»§Ãû²»ÄÜÎª¿Õ£¡¡±
-			request.setAttribute("msg", "ÑéÖ¤Âë²»ÄÜÎª¿Õ£¡");
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);
-			return;
 		}
 		
-		//3.2.ÅĞ¶ÏÁ½´ÎÃÜÂëÊÇ·ñÒ»ÖÂ
-		if(!password.equals(password2)){
-			request.setAttribute("msg", "Á½´ÎÃÜÂë²»Ò»ÖÂ£¡");
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);
-			return;
-		}
-		
-		//3.3.ÅĞ¶ÏÓÊÏä¸ñÊ½ÊÇ·ñÕıÈ·
-		//ÓÊÏäÕıÔò£º^\\w+@\\w+(\\.[a-z]+)+$
-		if(!email.matches("^\\w+@\\w+(\\.[a-z]+)+$")){
-			request.setAttribute("msg", "ÓÊÏä¸ñÊ½²»ÕıÈ·£¡");
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);
-			return;
-		}
-		
-		//3.4ÅĞ¶ÏÑéÖ¤ÂëÊÇ·ñÒ»ÖÂ£¨¸ù¾İ ÊÖ»ú »ñÈ¡µÄ ÑéÖ¤Âë£¬ÔÙ½øĞĞ ÅĞ¶Ï£©
-		//3.4.1.ÅĞ¶ÏÊÖ»úºÅÂëÊÇ·ñÊÇ11Î»
-		if(!phonenumber.matches("^1[3|5|8][0-9]{9}$")){
-			request.setAttribute("msg", "ÊÖ»úºÅÂë¸ñÊ½²»ÕıÈ·£¡");
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);
-			return;
-		}
-		
-		//3.5.ÅĞ¶ÏÊÖ»ú»ñÈ¡¶ÌĞÅÑéÖ¤Âë¸úapi½Ó¿Ú²úÉúµÄËæ»úÂëÊÇ·ñÒ»Ñù
-		//TODO  ÂÔ£º¿ÉÒÔÖ±½ÓÍ¨¹ıÇ°¶Ë¹â±êÒÆ×ß£¬Ajax»ñÈ¡µ÷ÓÃºóÌ¨Êı¾İÀ´ÅĞ¶Ï¶ÌĞÅÑéÖ¤ÂëÊÇ·ñÆ¥Åä
+		//3.5.åˆ¤æ–­æ‰‹æœºè·å–çŸ­ä¿¡éªŒè¯ç è·Ÿapiæ¥å£äº§ç”Ÿçš„éšæœºç æ˜¯å¦ä¸€æ ·
+		//TODO  ç•¥ï¼šå¯ä»¥ç›´æ¥é€šè¿‡å‰ç«¯å…‰æ ‡ç§»èµ°ï¼ŒAjaxè·å–è°ƒç”¨åå°æ•°æ®æ¥åˆ¤æ–­çŸ­ä¿¡éªŒè¯ç æ˜¯å¦åŒ¹é…
 		
 		
-		//3.6.Ğ£ÑéÍ¼Æ¬ÑéÖ¤Âë
+		//3.6.æ ¡éªŒå›¾ç‰‡éªŒè¯ç 
 		//TODO 
-		//3.6.1.»ñÈ¡±£´æÔÚsessionµÄÍ¼Æ¬ÑéÖ¤Âë
+		//3.6.1.è·å–ä¿å­˜åœ¨sessionçš„å›¾ç‰‡éªŒè¯ç 
 		String code = (String) request.getSession().getAttribute("code");
 		
-		//3.6.2.ÅĞ¶ÏÑéÖ¤ÂëÊÇ·ñÆ¥Åä
-		if(!valistr.equals(code) || valistr != code || code == null){
-			request.setAttribute("msg", "ÑéÖ¤Âë²»ÕıÈ·£¡");
+		//3.6.2.åˆ¤æ–­éªŒè¯ç æ˜¯å¦åŒ¹é…
+		if(!user.getValistr().toLowerCase().equals(code.toLowerCase())){
+			request.setAttribute("msg", "éªŒè¯ç ä¸æ­£ç¡®ï¼");
 			request.getRequestDispatcher("/regist.jsp").forward(request, response);
 			return;
 		}
 		
-		//3.7.ÅĞ¶Ï¡°µã»÷×¢²áÓÃ»§¡±Ê±£¬ÊÖ»úºÅÂë·¢ËÍ¶ÌĞÅºó¸úµã»÷×¢²áÊ±£¬¸ÃÊÖ»úºÅÂëÊÇ·ñÇ°ºóÒ»ÖÂ
-		//3.7.1.»ñÈ¡sessionÖĞ·¢ËÍ¶ÌĞÅºóµÄÊÖ»úºÅÂë£¨AjaxCheckSmsServlet£©
+		//3.7.åˆ¤æ–­â€œç‚¹å‡»æ³¨å†Œç”¨æˆ·â€æ—¶ï¼Œæ‰‹æœºå·ç å‘é€çŸ­ä¿¡åè·Ÿç‚¹å‡»æ³¨å†Œæ—¶ï¼Œè¯¥æ‰‹æœºå·ç æ˜¯å¦å‰åä¸€è‡´
+		//3.7.1.è·å–sessionä¸­å‘é€çŸ­ä¿¡åçš„æ‰‹æœºå·ç ï¼ˆAjaxCheckSmsServletï¼‰
 		String smsphone = (String) request.getSession().getAttribute("smsphone");
 		
-		//3.7.2.½øĞĞÅĞ¶Ï
-		if(!smsphone.equals(phonenumber)){//ÊÖ»úºÅÂëÇ°ºó²»Ò»ÖÂ
-			request.setAttribute("msg", "¡Á ¸ÃÊÖ»úºÅÂë²»ÊÇÔ­À´µÄºÅÂë£¬ÇëÖØĞÂ»ñÈ¡ÑéÖ¤Âë£¡");
+		//3.7.2.è¿›è¡Œåˆ¤æ–­
+		if(!smsphone.equals(user.getPhone())){//æ‰‹æœºå·ç å‰åä¸ä¸€è‡´
+			request.setAttribute("msg", "Ã— è¯¥æ‰‹æœºå·ç ä¸æ˜¯åŸæ¥çš„å·ç ï¼Œè¯·é‡æ–°è·å–éªŒè¯ç ï¼");
 			request.getRequestDispatcher("/regist.jsp").forward(request, response);
 			return;
 		}
 		
-		//3.8.ÅĞ¶ÏÊÇ·ñÖØ¸´Ìá½»
-		// 1.´ÓÒş²ØÓòÖĞ»ñÈ¡token
+		//3.8.å¯¹ç”¨æˆ·è¾“å…¥çš„å¯†ç å‚æ•°è¿›è¡ŒMD5åŠ å¯†å†ä¿å­˜åˆ°æ•°æ®åº“
+		//TODO åŠ å¯†å‡ºç°çš„å°é—®é¢˜ï¼šæ•°æ®åº“è¡¨è®¾è®¡ä¸­çš„å¯†ç å­—ç¬¦å¤§å°è®¾ç½®äº†100ï¼Œç»“æœå­˜å‚¨ä¸äº†ï¼Œæ”¹ä¸ºvarchar(200)
+		//TODO(ä¸ºäº†è·Ÿä¸Šè¯¾å ‚è€å¸ˆçš„æ¡ˆä¾‹è¿›åº¦ï¼Œå¦‚éœ€åŠ å¯†æ•ˆæœè¯·ç§»æ­¥åˆ°CopyofRegistServlet)
+		/*String MdPassword = "";
+		try {
+			//3.8.1.è·å–å¯†ç å‚æ•°ï¼ŒæŠŠå¯†ç æ”¾è¿›åŠ å¯†æ–¹æ³•é‡Œé¢
+			MdPassword = MDUtil.getEncryptedPwd(password);
+		} catch (NoSuchAlgorithmException e1) {
+			e1.printStackTrace();
+		}*/
+		
+		
+		
+		//3.9.åˆ¤æ–­æ˜¯å¦é‡å¤æäº¤
+		// 1.ä»éšè—åŸŸä¸­è·å–token
 		String token1 = request.getParameter("token");
-		// 2.´ÓsessionÖĞ»ñÈ¡token
+		// 2.ä»sessionä¸­è·å–token
 		Object tkObj = request.getSession().getAttribute("token");
 
 		if (tkObj != null && token1.equals((String) tkObj)) {
-			// µÚÒ»´ÎÌí¼Ó,´ÓsessionÖĞÇå³ıtoken
+			// ç¬¬ä¸€æ¬¡æ·»åŠ ,ä»sessionä¸­æ¸…é™¤token
 			request.getSession().getAttribute("token");
 
-		} else {// ·ÇµÚÒ»´ÎÌí¼Ó
-			throw new RuntimeException("Çë²»ÒªÖØ¸´Ìá½»");
+		} else {// éç¬¬ä¸€æ¬¡æ·»åŠ 
+			throw new RuntimeException("è¯·ä¸è¦é‡å¤æäº¤");
 
 		}
 		
-		//4.×¢²áÓÃ»§£¨½«×¢²áĞÅÏ¢±£´æµ½Êı¾İ¿â£©
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		//4.åˆ›å»ºä¸šåŠ¡å±‚å¯¹è±¡
+		UserService userService = new UserServiceImpl();
+		
+		//4.1.è°ƒç”¨ä¸šåŠ¡æ³¨å†Œæ–¹æ³•
 		try {
-			conn = JDBCUtils.getConnection();
+			//TODO ç»§ç»­å®Œæˆåˆ›å»ºä¸šåŠ¡å±‚ç±»å’Œdaoç±»çš„æ³¨å†Œæ–¹æ³•
+			boolean result = userService.regist(user);
+			//4.2.æ³¨å†ŒæˆåŠŸ
+			if(result){
+				//5.æç¤ºç”¨æˆ·æ³¨å†ŒæˆåŠŸï¼Œ3ç§’ä¹‹åè·³è½¬åˆ°ä¸»é¡µ
+				response.getWriter().write("<h1 style='color:red;text-align:center'>" +
+						"æ­å–œæ‚¨æ³¨å†ŒæˆåŠŸ, 3ç§’ä¹‹åå°†ä¼šè·³è½¬åˆ°ä¸»é¡µ...</h1>");
+				response.setHeader("Refresh", "3;url="+request.getContextPath()+"/index.jsp");
 			
-			//4.1.ÅĞ¶ÏÓÃ»§ÃûÊÇ·ñÒÑ´æÔÚ
-			String sql = "select * from user where username=?";
-			
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, username);
-			
-			rs = ps.executeQuery();
-			
-			if(rs.next()){//ÅĞ¶Ï¸ÃÓÃ»§ÊÇ·ñ´æÔÚ
-				//ÒÑ´æÔÚ
-				request.setAttribute("msg", "ÓÃ»§ÃûÒÑ´æÔÚ£¡");
-				request.getRequestDispatcher("/regist.jsp").forward(request, response);
-				return;
+			}else{//æ³¨å†Œå¤±è´¥
+				response.getWriter().write(
+						"<h1 style='color:red;text-align:center'>" +
+						"ç³»ç»Ÿé”™è¯¯ï¼Œè¯·é‡æ–°æ³¨å†Œ...</h1>");
+				response.setHeader("Refresh", "3;url="
+						+request.getContextPath()+"/regist.jsp");
 			}
-			
-			//4.2.ÓÃ»§Ãû²»´æÔÚ£¬½«ÓÃ»§Ãû×¢²áÊı¾İ±£´æµ½Êı¾İ¿â
-			sql = "insert into user values(null,?,?,?,?,?)";
-			
-			//4.3.ÉèÖÃ²ÎÊı
-			ps.setString(1, username);
-			ps.setString(2, password);
-			ps.setString(3, nickname);
-			ps.setString(4, email);
-			ps.setString(5, phonenumber);
-			
-			//4.4.Ö´ĞĞsqlÓï¾ä
-			ps.executeUpdate();
-			
-		} catch (SQLException e) {
+		} catch (MsgException e) {
 			e.printStackTrace();
-		} finally{
-			//4.5.¹Ø±Õ×ÊÔ´
-			JDBCUtils.close(conn, ps, rs);
+			request.setAttribute("msg", e.getMessage());
+			request.getRequestDispatcher("/regist.jsp").
+				forward(request, response);
 		}
 		
 		
-		//5.ÌáÊ¾ÓÃ»§×¢²á³É¹¦£¬3ÃëÖ®ºóÌø×ªµ½Ö÷Ò³
-		response.getWriter().write("<h1 style='color:red;text-align:center'>" +
-				"¹§Ï²Äú×¢²á³É¹¦, 3ÃëÖ®ºó½«»áÌø×ªµ½Ö÷Ò³...</h1>");
-		response.setHeader("Refresh", "3;url="+request.getContextPath()+"/index.jsp");
+		
+	
+		
+		
 		
 		
 		

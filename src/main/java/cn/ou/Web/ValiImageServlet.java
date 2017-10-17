@@ -14,22 +14,24 @@ public class ValiImageServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/* ¿ØÖÆä¯ÀÀÆ÷²»Òª»º´æÑéÖ¤ÂëÍ¼Æ¬ */
+		/* æ§åˆ¶æµè§ˆå™¨ä¸è¦ç¼“å­˜éªŒè¯ç å›¾ç‰‡ */
 		response.setDateHeader("Expires", -1);
 		response.setHeader("Cache-Control", "no-cache");
 		
-		/* »æÖÆÒ»ÕÅÑéÖ¤ÂëÍ¼Æ¬·¢ËÍ¸øä¯ÀÀÆ÷ */
+		/* ç»˜åˆ¶ä¸€å¼ éªŒè¯ç å›¾ç‰‡å‘é€ç»™æµè§ˆå™¨ */
 		VerifyCode vCode = new VerifyCode();
 		vCode.drawImage(response.getOutputStream());
 		
-		//»ñÈ¡ÑéÖ¤ÂëÎÄ±¾
+		//è·å–éªŒè¯ç æ–‡æœ¬
 		String valistr = vCode.getCode();
 		
-		//´´½¨session¶ÔÏó
+		//åˆ›å»ºsessionå¯¹è±¡
 		HttpSession session = request.getSession();
 		
-		//°ÑÍ¼Æ¬ÑéÖ¤Âë±£´æµ½sessionÖĞ,ÔÚservletÑéÖ¤
+		//æŠŠå›¾ç‰‡éªŒè¯ç ä¿å­˜åˆ°sessionä¸­,åœ¨servletéªŒè¯
 		session.setAttribute("code", valistr);
+		
+		System.out.println("å›¾ç‰‡éªŒè¯ç ï¼š"+valistr);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)

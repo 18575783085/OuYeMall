@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.ou.Util.JDBCUtils;
+import cn.ou.Util.DaoUtils;
+import cn.ou.service.UserService;
+import cn.ou.service.impl.UserServiceImpl;
 /**
- * ÀûÓÃAjaxµ÷ÓÃºóÌ¨¸ÃServlet
+ * åˆ©ç”¨Ajaxè°ƒç”¨åå°è¯¥Servlet
  * @author Administrator
  *
  */
@@ -21,39 +23,28 @@ public class AjaxCheckUsernameServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//1.´¦ÀíÏìÓ¦ÕıÎÄÂÒÂë
+		//1.å¤„ç†å“åº”æ­£æ–‡ä¹±ç 
 		response.setContentType("text/html;charset=utf-8");
-		//1.1´¦ÀíÇëÇó²ÎÊıÂÒÂë
+		//1.1å¤„ç†è¯·æ±‚å‚æ•°ä¹±ç 
 		request.setCharacterEncoding("UTF-8");
 		
-		//2.»ñÈ¡ÓÃ»§Ãû
+		//2.è·å–ç”¨æˆ·å(æ¥æ”¶å‚æ•°)
 		String username = request.getParameter("username");
 		
-		//3.¼ì²éÓÃ»§ÃûÊÇ·ñ´æÔÚ
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			conn = JDBCUtils.getConnection();
-			
-			String sql = "select * from user where username=?";
-			
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, username);
-			
-			rs = ps.executeQuery();
-			
-			if(rs.next()){//ÓÃ»§ÃûÒÑ´æÔÚ£¡
-				response.getWriter().write("<font style='color:red'>ÓÃ»§ÃûÒÑ´æÔÚ</font>");
+		//3.åˆ›å»ºä¸šåŠ¡å±‚
+		UserService userService = new UserServiceImpl();
+		
+		//4.è°ƒç”¨ä¸šåŠ¡å±‚çš„æ–¹æ³•æ£€æŸ¥ç”¨æˆ·åæ˜¯å¦å­˜åœ¨
+		boolean result = userService.unisExist(username.trim());
+		
+		//5.æ ¹æ®æŸ¥è¯¢çš„æ˜¯å¦å­˜åœ¨çš„ç»“æœåšå¯¹åº”çš„å“åº”
+		if(result){//ç”¨æˆ·åå·²å­˜åœ¨ï¼
+				response.getWriter().write("<font style='color:red'>ç”¨æˆ·åå·²å­˜åœ¨</font>");
 				
 			}else{
-				response.getWriter().write("<font style='color:red'>¹§Ï²£¬¸ÃÓÃ»§Ãû¿ÉÒÔÊ¹ÓÃ</font>");
+				response.getWriter().write("<font style='color:red'>æ­å–œï¼Œè¯¥ç”¨æˆ·åå¯ä»¥ä½¿ç”¨</font>");
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally{
-			JDBCUtils.close(conn, ps, rs);
-		}
+		
 		
 	}
 

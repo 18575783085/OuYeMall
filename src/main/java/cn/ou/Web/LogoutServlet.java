@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 /**
- * 注销用户
+ * 娉ㄩ攢鐢ㄦ埛
  * @author Administrator
  *
  */
@@ -15,10 +15,10 @@ public class LogoutServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//销毁session
+		//閿�姣乻ession
 		request.getSession().invalidate();
 		
-		//重定向到首页
+		//閲嶅畾鍚戝埌棣栭〉
 		response.sendRedirect(request.getContextPath()+"/index.jsp");
 
 	}

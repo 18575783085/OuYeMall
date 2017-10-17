@@ -15,83 +15,91 @@ import com.aliyuncs.exceptions.ClientException;
 
 import cn.ou.Code.demo;
 /**
- * µ÷ÓÃ·¢¶ÌĞÅ½Ó¿Ú
+ * è°ƒç”¨å‘çŸ­ä¿¡æ¥å£
  * @author Administrator
  *
  */
 public class AjaxCheckSmsServlet extends HttpServlet {
 
 	/**
-	 * ¶ÌĞÅ×ÜÌõÊı
+	 * çŸ­ä¿¡æ€»æ¡æ•°
 	 */
 	private static int message = 0;
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 1.´¦ÀíÏìÓ¦ÕıÎÄÂÒÂë
+		// 1.å¤„ç†å“åº”æ­£æ–‡ä¹±ç 
 		response.setContentType("text/html;charset=utf-8");
-		// 1.1´¦ÀíÇëÇó²ÎÊıÂÒÂë
+		// 1.1å¤„ç†è¯·æ±‚å‚æ•°ä¹±ç 
 		request.setCharacterEncoding("UTF-8");
 		
-		//2.1.»ñÈ¡µç»°ºÅÂë
+		//2.1.è·å–ç”µè¯å·ç 
 		String phone = request.getParameter("phonenumber");
 		
-		//2.2»ñÈ¡Ëæ»úÉú³ÉµÄÑéÖ¤Âë
+		//2.2è·å–éšæœºç”Ÿæˆçš„éªŒè¯ç 
         String code="";
        	for(int i=1;i<=6;i++){
        		code += (int)(Math.random()*9);
        	}
-       	//2.2.1.½«ÑéÖ¤Âë±£´æÔÚsessionÖĞ
-       	//ÏÈ»ñÈ¡Ò»¸ösession¶ÔÏó
+       	//2.2.1.å°†éªŒè¯ç ä¿å­˜åœ¨sessionä¸­
+       	//å…ˆè·å–ä¸€ä¸ªsessionå¯¹è±¡
        	HttpSession session = request.getSession();
        	
-       	//2.2.2.ÉèÖÃsmscodeÊôĞÔ±£´æcodeÖµ
+       	//2.2.2.è®¾ç½®smscodeå±æ€§ä¿å­˜codeå€¼
        	session.setAttribute("smscode", code);
-       	//2.2.3.±£´æµ±Ç°·¢ËÍ¶ÌĞÅµÄÊÖ»úºÅÂë½øsessionÖĞ
+       	//2.2.3.ä¿å­˜å½“å‰å‘é€çŸ­ä¿¡çš„æ‰‹æœºå·ç è¿›sessionä¸­
        	session.setAttribute("smsphone", phone);
        	
-		//3.µ÷ÓÃ¶ÌĞÅ½Ó¿Ú
-       	//ajax·µ»ØÖµ£ºdata
+       	
+       	
+        
+        //æ‰“æ¡©
+		System.out.println(phone);
+		System.out.println(code);
+		System.out.println("æ¡æ•°ï¼š"+message);
+       	
+		//3.è°ƒç”¨çŸ­ä¿¡æ¥å£
+       	//ajaxè¿”å›å€¼ï¼šdata
        	String data = "0";
        	
 		try {
-			//#ÅĞ¶Ï£ºÈç¹û·¢ËÍ¶ÌĞÅ×ÜÊı³¬¹ı5Ìõ£¬Ôò²»·¢ËÍ¶ÌĞÅ²¢·µ»Ø¾¯¸æ¸øÇ°Ì¨£¨²»Ö´ĞĞÒÔÏÂ´úÂë£©#
+			//#åˆ¤æ–­ï¼šå¦‚æœå‘é€çŸ­ä¿¡æ€»æ•°è¶…è¿‡5æ¡ï¼Œåˆ™ä¸å‘é€çŸ­ä¿¡å¹¶è¿”å›è­¦å‘Šç»™å‰å°ï¼ˆä¸æ‰§è¡Œä»¥ä¸‹ä»£ç ï¼‰#
 			if(message < 5){
-				// Ğ£Ñéµç»°ºÅÂë
+				// æ ¡éªŒç”µè¯å·ç 
 				String regex = "^1[3|5|8][0-9]{9}$";
 				if (!phone.matches(regex) || phone == null) {
-					// Ğ£ÑéÊ§°Ü
-					response.getWriter().write("<font color='red'>¡Á ÇëÊäÈëÓĞĞ§µÄÊÖ»úºÅÂë</font>");
+					// æ ¡éªŒå¤±è´¥
+					response.getWriter().write("<font color='red'>Ã— è¯·è¾“å…¥æœ‰æ•ˆçš„æ‰‹æœºå·ç </font>");
 					return;
 				} else {
 					
-					// 3.1.·¢ËÍ¶ÌĞÅ£¨ºÅÂë£¬ÑéÖ¤Âë£©
+					// 3.1.å‘é€çŸ­ä¿¡ï¼ˆå·ç ï¼ŒéªŒè¯ç ï¼‰
 					SendSmsResponse sendSms = demo.sendSms(phone, code);
 
-					//µÈ´ı3Ãë
+					//ç­‰å¾…3ç§’
 					Thread.sleep(3000L);
 
-					// 3.2.²éÃ÷Ï¸
+					// 3.2.æŸ¥æ˜ç»†
 					if (sendSms.getCode() != null && sendSms.getCode().equals("OK")) {
-						//·¢ËÍ³É¹¦
+						//å‘é€æˆåŠŸ
 						data = "1";
 						
-						//¶ÌĞÅ²éÑ¯api
+						//çŸ­ä¿¡æŸ¥è¯¢api
 						QuerySendDetailsResponse querySendDetailsRequest = demo.querySendDetails(sendSms.getBizId(), phone);
 						
-						//»ñÈ¡¶ÌĞÅÌõÊı
+						//è·å–çŸ­ä¿¡æ¡æ•°
 						String totalCount = querySendDetailsRequest.getTotalCount();
 						
-						//ÀÛ¼ÓÊıÄ¿
+						//ç´¯åŠ æ•°ç›®
 						message = message + Integer.parseInt(totalCount);
 						
 					}else {
-						//·¢ËÍÊ§°Ü
+						//å‘é€å¤±è´¥
 						data = "0";
 					}
 
 				}
 			}else {
-				//Ò»¸öÊÖ»úºÅÂë×î¶à¿É·¢ËÍ5Ìõ¶ÌĞÅÑéÖ¤Âë
+				//ä¸€ä¸ªæ‰‹æœºå·ç æœ€å¤šå¯å‘é€5æ¡çŸ­ä¿¡éªŒè¯ç 
 				data = "2";
 				
 			}
@@ -101,11 +109,6 @@ public class AjaxCheckSmsServlet extends HttpServlet {
 	        PrintWriter out = response.getWriter();  
 	        out.write(data); 
 			
-	        
-	        //´ò×®
-			System.out.println(phone);
-			System.out.println(code);
-			System.out.println("ÌõÊı£º"+message);
 			
 		} catch (ClientException e) {
 			e.printStackTrace();

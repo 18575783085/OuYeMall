@@ -2,6 +2,7 @@ package cn.ou.Web;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,92 +15,90 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import cn.ou.Util.JDBCUtils;
+import cn.ou.Util.DaoUtils;
+import cn.ou.Util.MDUtil;
+import cn.ou.entity.User;
+import cn.ou.service.UserService;
+import cn.ou.service.impl.UserServiceImpl;
 
 /**
- * ´¦ÀíÓÃ»§µÄµÇÂ¼ÇëÇó
+ * å¤„ç†ç”¨æˆ·çš„ç™»å½•è¯·æ±‚
  * @author Administrator
+ * åºå·è§£é‡Šï¼š
+ * x.x.x.x
+ * ç™»é™†æ­¥éª¤.åˆ¤æ–­ç”¨æˆ·åæ˜¯å¦å­˜åœ¨.åˆ¤æ–­ç”¨æˆ·å¯†ç æ˜¯å¦åŒ¹é….åˆ¤æ–­ç”¨æˆ·æ˜¯å¦å‹¾é€‰è®°ä½ç”¨æˆ·å
  *
  */
 public class LoginServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1.´¦ÀíÇëÇó²ÎÊıÂÒÂë
+		//1.å¤„ç†è¯·æ±‚å‚æ•°ä¹±ç 
 		request.setCharacterEncoding("utf-8");
 		
-		//2.»ñÈ¡µÇÂ¼ĞÅÏ¢
+		//2.è·å–ç™»å½•ä¿¡æ¯
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String remname = request.getParameter("remname");
 		
-		//3.µÇÂ¼ÓÃ»§£¨¸ù¾İÓÃ»§ÃûºÍÃÜÂë²éÑ¯ÓÃ»§£©
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			conn = JDBCUtils.getConnection();
+		//3.ç™»å½•ç”¨æˆ·ï¼ˆæ ¹æ®ç”¨æˆ·åå’Œå¯†ç æŸ¥è¯¢ç”¨æˆ·ï¼‰
+		/*ç”±äºç”¨æˆ·çš„å¯†ç åŠ å¯†å­˜æ”¾åˆ°æ•°æ®ï¼Œæ‰€ä»¥å…ˆæŸ¥è¯¢è¯¥ç”¨æˆ·çš„å¯†ç ï¼Œ
+		*ç„¶åè¿›è¡Œè§£å¯†ï¼Œå†åˆ¤æ–­è¾“å…¥çš„å¯†ç æ˜¯å¦è·Ÿè§£å¯†åçš„åŒ¹é…
+		*åŒ¹é…æˆåŠŸè¿›è¡Œä¸‹ä¸€æ­¥æ“ä½œ
+		*TODO(ä¸ºäº†è·Ÿä¸Šè¯¾å ‚è€å¸ˆçš„æ¡ˆä¾‹è¿›åº¦ï¼Œå¦‚éœ€è§£å¯†æ•ˆæœè¯·ç§»æ­¥åˆ°CopyofLoginServlet)
+		*/
+		/*åˆ›å»ºä¸šåŠ¡å±‚å¯¹è±¡*/
+		//A1.ä¸šåŠ¡å±‚æ¥å£è°ƒç”¨ä¸šåŠ¡å±‚çš„å®ç°ç±»
+		UserService userService = new UserServiceImpl();
+		
+		//A2.è°ƒç”¨ä¸šåŠ¡å±‚æ–¹æ³•
+		User user = userService.login(username,password);
+		
+		//A3.åˆ¤æ–­ç™»é™†æ˜¯å¦æˆåŠŸ
+		if(user == null){
+			//A4.ç™»é™†å¤±è´¥ï¼Œæç¤ºç”¨æˆ·æˆ–å¯†ç é”™è¯¯--->login.jsp
+			request.setAttribute("msg", "ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯ï¼");
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
+		}else {
 			
-			String sql = "select * from user where username=? and password=?";
-			
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, username);
-			ps.setString(2, password);
-			
-			rs = ps.executeQuery();
-			
-			//3.1.ÓÃ»§ÃûºÍÃÜÂëÕıÈ·
-			if(rs.next()){//ÓÃ»§ÃûºÍÃÜÂëÕıÈ·
-				//3.1.1.1.ÅĞ¶ÏÊÇ·ñĞèÒª¼Ç×¡ÓÃ»§Ãû(ÅĞ¶Ï¸´Ñ¡°´Å¥µÄÑ¡ÔñÊôĞÔ)
-				if("true".equals(remname)){
-					//3.1.1.2.½«ÓÃ»§Ãû½øĞĞurl±àÂëÖ®ºóÔÙ´æÈëCookieÖĞ
-					Cookie cookie = new Cookie("remname", URLEncoder.encode(username, "utf-8"));
-					
-					//3.1.1.3.ÉèÖÃCookieµÄ×î´ó´æ»îÊ±¼ä
-					cookie.setMaxAge(3600 * 24 * 30);//30Ìì
-					
-					//3.1.1.4.ÉèÖÃCookieµÄÂ·¾¶
-					cookie.setPath(request.getContextPath()+"/");
-					
-					//3.1.1.5.½«CookieÌí¼Óµ½ÏìÓ¦ÖĞ
-					response.addCookie(cookie);
-					
-				}else {
-					//3.1.2.È¡Ïû¼Ç×¡ÓÃ»§Ãû£¨É¾³ıCookie£©
-					Cookie cookie = new Cookie("remname", "");
-					//3.1.2.Á¢¼´É¾³ıCookie!
-					cookie.setMaxAge(0);
-					cookie.setPath(request.getContextPath()+"/");
-					response.addCookie(cookie);
-				}
+			//3.2.1.åˆ¤æ–­æ˜¯å¦éœ€è¦è®°ä½ç”¨æˆ·å(åˆ¤æ–­å¤é€‰æŒ‰é’®çš„é€‰æ‹©å±æ€§)
+			if("true".equals(remname)){//3.2.3.1.å¦‚æœå‹¾é€‰è®°ä½ç”¨æˆ·å
 				
-				//3.1.3.1½øĞĞµÇÂ¼²Ù×÷£¨½«ÓÃ»§ĞÅÏ¢±£´æ½øsessionÖĞ£©
-				//TODO --- µÇÂ¼²Ù×÷
-				//´´½¨session¶ÔÏó£¬Ïòsession±£´æµ±Ç°ÓÃ»§µÄÓÃ»§Ãû
-				HttpSession session = request.getSession();
+				//3.2.1.1.å°†ç”¨æˆ·åè¿›è¡Œurlç¼–ç ä¹‹åå†å­˜å…¥Cookieä¸­
+				Cookie cookie = new Cookie("remname", URLEncoder.encode(username, "utf-8"));
 				
-				//½«ÓÃ»§ÃûºÍÃÜÂë±£´æ½øsessionÖĞ
-				session.setAttribute("username", username);
-				//session.setAttribute("password", password);
+				//3.2.1.2.è®¾ç½®Cookieçš„æœ€å¤§å­˜æ´»æ—¶é—´
+				cookie.setMaxAge(3600 * 24 * 30);//30å¤©
 				
+				//3.2.1.3.è®¾ç½®Cookieçš„è·¯å¾„
+				cookie.setPath(request.getContextPath()+"/");
 				
-				
-				//3.1.4.µÇÂ¼³É¹¦£¬Ìø×ªÒ³Ãæ
-				response.sendRedirect(request.getContextPath()+"/index.jsp");
-				
+				//3.2.1.4.å°†Cookieæ·»åŠ åˆ°å“åº”ä¸­
+				response.addCookie(cookie);
 				
 			}else {
-				//3.2.ÓÃ»§Ãû»òÃÜÂë²»ÕıÈ·
-				request.setAttribute("msg", "ÓÃ»§Ãû»òÃÜÂë²»ÕıÈ·£¡");
-				request.getRequestDispatcher("/login.jsp").forward(request, response);
-				
-				return;
+				//3.2.2.å–æ¶ˆè®°ä½ç”¨æˆ·åï¼ˆåˆ é™¤Cookieï¼‰----->ä¸å‹¾é€‰
+				Cookie cookie = new Cookie("remname", "");
+				//3.2.2.1.ç«‹å³åˆ é™¤Cookie!
+				cookie.setMaxAge(0);
+				cookie.setPath(request.getContextPath()+"/");
+				response.addCookie(cookie);
 			}
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCUtils.close(conn, ps, rs);
+			//3.2.3.è¿›è¡Œç™»å½•æ“ä½œï¼ˆå°†ç”¨æˆ·ä¿¡æ¯ä¿å­˜è¿›sessionä¸­ï¼‰
+			//TODO --- ç™»å½•æ“ä½œ
+			//åˆ›å»ºsessionå¯¹è±¡ï¼Œå‘sessionä¿å­˜å½“å‰ç”¨æˆ·çš„ç”¨æˆ·å
+			HttpSession session = request.getSession();
+			
+			//å°†ç”¨æˆ·åå’Œå¯†ç ä¿å­˜è¿›sessionä¸­
+			session.setAttribute("username", username);
+			//session.setAttribute("password", password);
+			
+			
+			
+			//3.2.4.ç™»å½•æˆåŠŸï¼Œè·³è½¬é¡µé¢
+			response.sendRedirect(request.getContextPath()+"/index.jsp");
 		}
+			
 		
 	}
 

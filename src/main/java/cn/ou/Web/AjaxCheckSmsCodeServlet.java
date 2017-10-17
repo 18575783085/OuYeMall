@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 /**
- * ÊµÏÖ¹¦ÄÜ£º¹â±êÒÆ×ßĞ£Ñé¶ÌĞÅÑéÖ¤Âë
+ * å®ç°åŠŸèƒ½ï¼šå…‰æ ‡ç§»èµ°æ ¡éªŒçŸ­ä¿¡éªŒè¯ç 
  * @author Administrator
  *
  */
@@ -16,30 +16,30 @@ public class AjaxCheckSmsCodeServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 1.´¦ÀíÏìÓ¦ÕıÎÄÂÒÂë
+		// 1.å¤„ç†å“åº”æ­£æ–‡ä¹±ç 
 		response.setContentType("text/html;charset=utf-8");
-		// 1.1´¦ÀíÇëÇó²ÎÊıÂÒÂë
+		// 1.1å¤„ç†è¯·æ±‚å‚æ•°ä¹±ç 
 		request.setCharacterEncoding("UTF-8");
 		
-		//2.»ñÈ¡ÓÃ»§ÊäÈëµÄÑéÖ¤Âë
+		//2.è·å–ç”¨æˆ·è¾“å…¥çš„éªŒè¯ç 
 		String smsvalistr = request.getParameter("smsvalistr");
-		//TODO »ñÈ¡ÓÃ»§ÊäÈëµÄÊÖ»úºÅÂë²ÎÊı
+		//TODO è·å–ç”¨æˆ·è¾“å…¥çš„æ‰‹æœºå·ç å‚æ•°
 		String phonenumber = request.getParameter("phonenumber");
 		
-		//3.1.»ñÈ¡session´æ´¢µÄ¶ÌĞÅÑéÖ¤Âë
+		//3.1.è·å–sessionå­˜å‚¨çš„çŸ­ä¿¡éªŒè¯ç 
 		String smscode = (String) request.getSession().getAttribute("smscode");
 		
-		//3.2.»ñÈ¡session´æ´¢µÄÊÖ»úºÅÂë
+		//3.2.è·å–sessionå­˜å‚¨çš„æ‰‹æœºå·ç 
 		//String smsphone = (String) request.getSession().getAttribute("smsphone");
 		
-		//System.out.println("ÑéÖ¤µÄÊÖ»úºÅÂë£º"+smsphone);
-		System.out.println("ÎÄ±¾¿òµÄÊÖ»úºÅÂë£º"+phonenumber);
-		System.out.println("¶ÌĞÅÑéÖ¤Âë£º"+smscode);
-		//4.ÏÈÅĞ¶ÏÊÇ·ñÊÇµ±Ç°ÊÖ»úºÅÂë·¢ËÍ¶ÌĞÅ(Õâ¹¦ÄÜÒÑÇ¨ÒÆµ½registServetÀïÊµÏÖ) ---> ÔÙÅĞ¶Ï¶ÌĞÅÑéÖ¤ÂëÊÇ·ñÆ¥Åä
+		//System.out.println("éªŒè¯çš„æ‰‹æœºå·ç ï¼š"+smsphone);
+		System.out.println("æ–‡æœ¬æ¡†çš„æ‰‹æœºå·ç ï¼š"+phonenumber);
+		System.out.println("çŸ­ä¿¡éªŒè¯ç ï¼š"+smscode);
+		//4.å…ˆåˆ¤æ–­æ˜¯å¦æ˜¯å½“å‰æ‰‹æœºå·ç å‘é€çŸ­ä¿¡(è¿™åŠŸèƒ½å·²è¿ç§»åˆ°registServeté‡Œå®ç°) ---> å†åˆ¤æ–­çŸ­ä¿¡éªŒè¯ç æ˜¯å¦åŒ¹é…
 		String data = "1";
 //		if(!smsphone.equals(phonenumber)){
-//			//²»ÊÇÔ­À´·¢¶ÌĞÅµÄÊÖ»úºÅ
-//			//response.getWriter().write("<font color='red'>¡Á ¸ÃÊÖ»úºÅÂë²»ÊÇÔ­À´µÄºÅÂë£¬ÇëÖØĞÂ»ñÈ¡ÑéÖ¤Âë</font>");
+//			//ä¸æ˜¯åŸæ¥å‘çŸ­ä¿¡çš„æ‰‹æœºå·
+//			//response.getWriter().write("<font color='red'>Ã— è¯¥æ‰‹æœºå·ç ä¸æ˜¯åŸæ¥çš„å·ç ï¼Œè¯·é‡æ–°è·å–éªŒè¯ç </font>");
 //			data = "3";
 //		}else {
 			
@@ -58,12 +58,12 @@ public class AjaxCheckSmsCodeServlet extends HttpServlet {
 
         
 		/*if(!smsvalistr.equals(smscode) || smsvalistr != smscode){
-			//Èç¹û²»Æ¥Åä
-			response.getWriter().write("<font color='red'>¡Á ÑéÖ¤Âë²»ÕıÈ·,ÇëÖØĞÂ»ñÈ¡</font>");
+			//å¦‚æœä¸åŒ¹é…
+			response.getWriter().write("<font color='red'>Ã— éªŒè¯ç ä¸æ­£ç¡®,è¯·é‡æ–°è·å–</font>");
 			
 		}else{
-			//Èç¹ûÆ¥Åä
-			response.getWriter().write("<font color='#339933'>¡Ì ÑéÖ¤ÂëÕıÈ·</font>");
+			//å¦‚æœåŒ¹é…
+			response.getWriter().write("<font color='#339933'>âˆš éªŒè¯ç æ­£ç¡®</font>");
 		}*/
 
 	}

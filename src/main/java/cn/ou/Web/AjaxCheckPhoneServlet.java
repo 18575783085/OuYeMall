@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.ou.Util.JDBCUtils;
+import cn.ou.Util.DaoUtils;
 /**
- * Ğ£ÑéÊÖ»úºÅÂëÊÇ·ñ´æÔÚ
+ * æ ¡éªŒæ‰‹æœºå·ç æ˜¯å¦å­˜åœ¨
  * @author Administrator
  *
  */
@@ -22,20 +22,20 @@ public class AjaxCheckPhoneServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		// 1.´¦ÀíÏìÓ¦ÕıÎÄÂÒÂë
+		// 1.å¤„ç†å“åº”æ­£æ–‡ä¹±ç 
 		response.setContentType("text/html;charset=utf-8");
-		// 1.1´¦ÀíÇëÇó²ÎÊıÂÒÂë
+		// 1.1å¤„ç†è¯·æ±‚å‚æ•°ä¹±ç 
 		request.setCharacterEncoding("UTF-8");
 
-		// 2.»ñÈ¡µç»°ºÅÂë
+		// 2.è·å–ç”µè¯å·ç 
 		String phone = request.getParameter("phonenumber");
 		
-		//3.Ğ£ÑéÊÖ»úºÅÂëÊÇ·ñ´æÔÚ
+		//3.æ ¡éªŒæ‰‹æœºå·ç æ˜¯å¦å­˜åœ¨
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			conn = JDBCUtils.getConnection();
+			conn = DaoUtils.getConnection();
 			
 			String sql = "select * from user where phone=?";
 			
@@ -45,18 +45,18 @@ public class AjaxCheckPhoneServlet extends HttpServlet {
 			rs = ps.executeQuery();
 			
 			if(rs.next()){
-				//ÊÖ»úºÅÂëÒÑ´æÔÚ
-				response.getWriter().write("<font color='red'>¡Á ¸ÃÊÖ»úºÅÂëÒÑ¾­±»×¢²á£¬ÇëÖØĞÂÊäÈë</font>");
+				//æ‰‹æœºå·ç å·²å­˜åœ¨
+				response.getWriter().write("<font color='red'>Ã— è¯¥æ‰‹æœºå·ç å·²ç»è¢«æ³¨å†Œï¼Œè¯·é‡æ–°è¾“å…¥</font>");
 				
 			}else{
-				//ÊÖ»úºÅÂë²»´æÔÚ
-				response.getWriter().write("<font color='#339933'>¡Ì ¸ÃÊÖ»úºÅÂë¿ÉÒÔ×¢²á£¬ÊäÈëÕıÈ·</font>");
+				//æ‰‹æœºå·ç ä¸å­˜åœ¨
+				response.getWriter().write("<font color='#339933'>âˆš è¯¥æ‰‹æœºå·ç å¯ä»¥æ³¨å†Œï¼Œè¾“å…¥æ­£ç¡®</font>");
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
-			JDBCUtils.close(conn, ps, rs);
+			DaoUtils.close(conn, ps, rs);
 		}
 				
 
