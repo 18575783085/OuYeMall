@@ -13,101 +13,101 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 /**
- * »­ÑéÖ¤Âë£ºÀûÓÃjava³ÌĞò»æÖÆÑéÖ¤ÂëÍ¼Æ¬
+ * ç”»éªŒè¯ç ï¼šåˆ©ç”¨javaç¨‹åºç»˜åˆ¶éªŒè¯ç å›¾ç‰‡
  * @author Administrator
  *
  */
 public class VerifyCode {
 	/**
-	 * Í¼Æ¬µÄ¿í
+	 * å›¾ç‰‡çš„å®½
 	 */
 	private static int width = 120;
 	/**
-	 * Í¼Æ¬µÄ¸ß
+	 * å›¾ç‰‡çš„é«˜
 	 */
 	private static int height = 30;
 	/**
-	 * Ëæ»úÉú³ÉµÄ×Ö·û¡°³Ø¡±
+	 * éšæœºç”Ÿæˆçš„å­—ç¬¦â€œæ± â€
 	 */
 	private static String codes = "23456789abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ";
 	/**
-	 * Í¼Æ¬×ÖÌå
+	 * å›¾ç‰‡å­—ä½“
 	 */
-	private static String[] fontNames = { "Î¢ÈíÑÅºÚ", "ºÚÌå", "»ªÎÄ¿¬Ìå", "Ó×Ô²", "ËÎÌå",
-			"¿¬Ìå" };
+	private static String[] fontNames = { "å¾®è½¯é›…é»‘", "é»‘ä½“", "åæ–‡æ¥·ä½“", "å¹¼åœ†", "å®‹ä½“",
+			"æ¥·ä½“" };
 	/**
-	 * ±£´æÑéÖ¤ÂëÎÄ±¾
+	 * ä¿å­˜éªŒè¯ç æ–‡æœ¬
 	 */
 	private String valistr = "";
 	
 	
 	/**
-	 * »æÖÆÑéÖ¤ÂëÍ¼Æ¬
+	 * ç»˜åˆ¶éªŒè¯ç å›¾ç‰‡
 	 */
 	public void drawImage(OutputStream output){
-		//1.´´½¨Ò»¸öÍ¼Æ¬»º³åÇø¶ÔÏó£¨´ú±íÒ»¸±Í¼Ïñ£©
-		//²¢ÉèÖÃÍ¼Æ¬µÄ¿í¸ßºÍÀàĞÍ
+		//1.åˆ›å»ºä¸€ä¸ªå›¾ç‰‡ç¼“å†²åŒºå¯¹è±¡ï¼ˆä»£è¡¨ä¸€å‰¯å›¾åƒï¼‰
+		//å¹¶è®¾ç½®å›¾ç‰‡çš„å®½é«˜å’Œç±»å‹
 		BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		
-		//2.ÄÃµ½»­±Ê£¨µÃµ½»æÖÆ»·¾³£©
+		//2.æ‹¿åˆ°ç”»ç¬”ï¼ˆå¾—åˆ°ç»˜åˆ¶ç¯å¢ƒï¼‰
 		Graphics2D g2 = (Graphics2D) bi.getGraphics();
 		
-		//3.¿ªÊ¼»­Í¼
-		/*»­Ò»¸öÍÖÔ²*/
+		//3.å¼€å§‹ç”»å›¾
+		/*ç”»ä¸€ä¸ªæ¤­åœ†*/
 		//g2.drawOval(0, 5, width, height);
 		
-		/*»­Ò»¸ö¾ØĞÎ*/
+		/*ç”»ä¸€ä¸ªçŸ©å½¢*/
 		//g2.drawRect(5, 5, 20, 20);
 		
-		/*3.1.ÉèÖÃ±³¾°ÑÕÉ«*/
+		/*3.1.è®¾ç½®èƒŒæ™¯é¢œè‰²*/
 		g2.fillRect(0, 0, width, height);
 		
-		/*3.2.ÉèÖÃ»­±ÊÑÕÉ«*/
+		/*3.2.è®¾ç½®ç”»ç¬”é¢œè‰²*/
 		g2.setColor(Color.red);
 		
-		/*3.3.ÉèÖÃ×ÖÌå´óĞ¡*/
-		g2.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 22));
+		/*3.3.è®¾ç½®å­—ä½“å¤§å°*/
+		g2.setFont(new Font("å¾®è½¯é›…é»‘", Font.BOLD, 22));
 		
-		/*3.4.»­Ò»¸ö×Ö·û£¨´®£©*/
+		/*3.4.ç”»ä¸€ä¸ªå­—ç¬¦ï¼ˆä¸²ï¼‰*/
 		for(int i=0;i<4;i++){
-			/*3.4.1.ÉèÖÃ×ÖÌåÑÕÉ«Ëæ»ú*/
+			/*3.4.1.è®¾ç½®å­—ä½“é¢œè‰²éšæœº*/
 			g2.setColor(new Color(getRandom(0,175),getRandom(0,175),getRandom(0,175)));
 			
-			/*3.4.2.ÉèÖÃ×ÖÌåËæ»ú*/
+			/*3.4.2.è®¾ç½®å­—ä½“éšæœº*/
 			g2.setFont(new Font(fontNames[getRandom(0, fontNames.length)], Font.BOLD, 22));
 			
-			/*3.4.3.½«Í¼Æ¬Ğı×ªÖ¸¶¨µÄ¶ÈÊı*/
-			/*3.4.3.1.½«Ëæ»ú»ñÈ¡µÄ¶ÈÊı×ª³É»¡¶È*/
+			/*3.4.3.å°†å›¾ç‰‡æ—‹è½¬æŒ‡å®šçš„åº¦æ•°*/
+			/*3.4.3.1.å°†éšæœºè·å–çš„åº¦æ•°è½¬æˆå¼§åº¦*/
 			double theta = getRandom(-45, +45) * Math.PI / 180;
 			g2.rotate(theta, i * 30 + 7, height - 7);
 			
-			/*3.4.3.2.Ëæ»ú»ñÈ¡Ò»¸ö×Ö·û*/
+			/*3.4.3.2.éšæœºè·å–ä¸€ä¸ªå­—ç¬¦*/
 			String code = codes.charAt(getRandom(0, codes.length())) + "";
 			g2.drawString(code, i * 30 +7, height - 7);
 			
 			valistr = valistr + code;
 			
-			/*3.4.4.½«Í¼Æ¬ÔÙĞı×ª»ØÀ´*/
+			/*3.4.4.å°†å›¾ç‰‡å†æ—‹è½¬å›æ¥*/
 			g2.rotate(-theta, i * 30 + 7, height - 7);
 			
 			
 		}
 		
-		/*3.5.»­¸ÉÈÅÏß*/
+		/*3.5.ç”»å¹²æ‰°çº¿*/
 		for(int i = 0; i < 6 ; i++){
-			/*3.5.1.ÉèÖÃ×ÖÌåÑÕÉ«Ëæ»ú*/
+			/*3.5.1.è®¾ç½®å­—ä½“é¢œè‰²éšæœº*/
 			g2.setColor(new Color(getRandom(0, 175),getRandom(0, 175),getRandom(0, 175)));
 			
-			/*3.5.2.Ëæ»ú»­Ò»ÌõÏß*/
+			/*3.5.2.éšæœºç”»ä¸€æ¡çº¿*/
 			g2.drawLine(getRandom(0, width), getRandom(0, height), getRandom(0, width), getRandom(0, height));
 		}
 		
-		/*3.6.»­Ò»¸ö±ß¿ò*/
-		/*3.6.1.ÉèÖÃ±ß¿òµÄÑÕÉ«*/
+		/*3.6.ç”»ä¸€ä¸ªè¾¹æ¡†*/
+		/*3.6.1.è®¾ç½®è¾¹æ¡†çš„é¢œè‰²*/
 		g2.setColor(Color.GRAY);
 		g2.drawRect(0, 0, width-1, height-1);
 		
-		//4.±£´æÍ¼Æ¬µ½Ö¸¶¨Î»ÖÃ£¨Ó²ÅÌ/·¢ËÍ¸øä¯ÀÀÆ÷£©
+		//4.ä¿å­˜å›¾ç‰‡åˆ°æŒ‡å®šä½ç½®ï¼ˆç¡¬ç›˜/å‘é€ç»™æµè§ˆå™¨ï¼‰
 		try {
 			ImageIO.write(bi, "JPEG", output);
 		} catch (IOException e) {
@@ -115,14 +115,14 @@ public class VerifyCode {
 		}
 		
 		
-		//5.ÊÍ·Å×ÊÔ´
+		//5.é‡Šæ”¾èµ„æº
 		g2.dispose();
 		
 		
 	}
 	
 	/**
-	 * ·µ»ØÑéÖ¤ÂëÎÄ±¾
+	 * è¿”å›éªŒè¯ç æ–‡æœ¬
 	 * @return
 	 */
 	public String getCode(){
@@ -131,7 +131,7 @@ public class VerifyCode {
 	
 	
 	/**
-	 * »ñÈ¡Ò»¸öÖ¸¶¨·¶Î§µÄËæ»úÊı 0~10 3~10
+	 * è·å–ä¸€ä¸ªæŒ‡å®šèŒƒå›´çš„éšæœºæ•° 0~10 3~10
 	 * @param start
 	 * @param end
 	 * @return
@@ -145,7 +145,7 @@ public class VerifyCode {
 		VerifyCode vc = new VerifyCode();
 		vc.drawImage(new FileOutputStream("./src/main/webapp/img/regist/vc.jpg"));
 		
-		System.out.println("Ö´ĞĞÍê±Ï");
+		System.out.println("æ‰§è¡Œå®Œæ¯•");
 	}
 
 }

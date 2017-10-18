@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+
 import cn.ou.Util.DaoUtils;
 import cn.ou.dao.UserDao;
 import cn.ou.entity.User;
@@ -26,7 +29,7 @@ public class UserDaoImpl implements UserDao {
 	public User login(String username, String password) {
 		
 		try {
-			//1.获取数据库连接
+			/*//1.获取数据库连接
 			conn = DaoUtils.getConnection();
 			//2.编写sql语句
 			String sql = "select * from user where username=? and password=?";
@@ -51,15 +54,30 @@ public class UserDaoImpl implements UserDao {
 				user.setPhone(rs.getString("phone"));
 				
 				//返回user对象
-				return user;
-			}
+				return user;*/
+			
+			
+			/*
+			 *TODO 版本1：导入dbutils-jar包，使用dbutils接口进行修改简化CURDsql语句
+			 */
+			//1.创建QueryRunner对象
+			QueryRunner qr = new QueryRunner(DaoUtils.getPool());
+			
+			//2.编写sql语句
+			String sql = "select * from user where username=? and password=?";
+			
+			//3.执行查询操作，并返回User类对象
+			return qr.query(sql, new BeanHandler<User>(User.class),username,password);
+			
+			/*
+			 * TODO 版本2：使用自己开发的接口实现类（重点理解dbutils接口的底层实现原理）
+			 */
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
-		} finally{
-			//9.关闭数据库对象
-			DaoUtils.close(conn, ps, rs);
 		}
+		
 		
 		//8.不存在返回null
 		return null;
@@ -70,32 +88,77 @@ public class UserDaoImpl implements UserDao {
 	 */
 	public boolean unIsExist(String username) {
 		try {
-			//1.获取数据库连接
+			/*//1.获取数据库连接
 			conn = DaoUtils.getConnection();
-			
 			//2.创建sql语句
 			String sql = "select * from user where username=?";
-			
 			//3.创建传输器，预编译sql，并返回rs结果
 			ps = conn.prepareStatement(sql);
-			
 			//4.为占位符赋值
 			ps.setString(1, username);
-			
 			//5.执行查询操作，并返回结果集
 			rs = ps.executeQuery();
-			
 			//6.判断结果集是否存在数据,并返回结果
 			//存在则true
-			return rs.next();
+			return rs.next();*/
+			
+			//1.创建QueryRunner对象
+			QueryRunner qr = new QueryRunner(DaoUtils.getPool());
+			//2.编写sql语句
+			String sql = "select * from user where username=?";
+			//3.查询返回结果，并处理结果
+			return qr.query(sql, new BeanHandler<User>(User.class), username) != null;
 			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			DaoUtils.close(conn, ps, rs);
-		}
+		} 
 		return false;
+	}
+
+	/**
+	 * 用户注册
+	 * 添加一条数据
+	 */
+	public int regist(User user) {
+		try {
+			/*//1.获取数据库连接
+			conn = DaoUtils.getConnection();
+			//2.创建sql语句
+			String sql = "insert into user" +
+					"(username,password,nickname,email,phone) " +
+					"values" +
+					"(?,?,?,?,?)";
+			//3.创建传输器，预编译sql
+			ps = conn.prepareStatement(sql);
+			//4.为占位赋值
+			ps.setString(1, user.getUsername());
+			ps.setString(2, user.getPassword());
+			ps.setString(3, user.getNickname());
+			ps.setString(4, user.getEmail());
+			ps.setString(5, user.getPhone());
+			//5.执行查询操作，并返回结果集
+			int row = ps.executeUpdate();
+			//6.返回执行结果，有行数则为插入成功，反之则失败
+			return row;*/
+			
+			//1.创建QueryRunner对象
+			QueryRunner qr = new QueryRunner(DaoUtils.getPool());
+			
+			//2.编写sql语句
+			String sql = "insert into user"
+					+ "(username,password,nickname,email,phone)"
+					+ "values "
+					+ "(?,?,?,?,?)";
+			
+			//3.查询返回执行结果，有行数则为插入成功，反之则失败
+			return qr.update(sql, user.getUsername(),user.getPassword(),user.getNickname(),user.getEmail(),user.getPhone());
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 
 }

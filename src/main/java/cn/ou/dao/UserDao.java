@@ -26,4 +26,11 @@ public interface UserDao {
 	 */
 	public boolean unIsExist(String username);
 
+	/**
+	 * 向数据库的user表中添加一条用户信息
+	 * @param user : 封装了用户信息user类对象
+	 * @return	影响的行数
+	 */
+	public int regist(User user) ;
+
 }

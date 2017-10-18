@@ -1,6 +1,7 @@
 package cn.ou.service;
 
 import cn.ou.entity.User;
+import cn.ou.exception.MsgException;
 /**
  * 业务层接口
  * @author Administrator
@@ -24,5 +25,13 @@ public interface UserService {
 	 * @return true：用户已存在  false：不存在
 	 */
 	public boolean unisExist(String username);
+
+	/**
+	 * 注册用户
+	 * @param user ：User类的对象（封装了用户在注册页面提交的信息）
+	 * @return true：表示注册成功，false：表示了注册失败
+	 * @throws MsgException 用户名已存在抛出异常
+	 */
+	public boolean regist(User user) throws MsgException;
 
 }

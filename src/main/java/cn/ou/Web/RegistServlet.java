@@ -1,6 +1,7 @@
 package cn.ou.Web;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,10 +18,12 @@ import org.apache.commons.beanutils.BeanUtils;
 import cn.ou.Util.DaoUtils;
 import cn.ou.Util.MDUtil;
 import cn.ou.Util.WebUtils;
+import cn.ou.dao.UserDao;
 import cn.ou.entity.User;
 import cn.ou.exception.MsgException;
+import cn.ou.factory.BasicFactory;
+import cn.ou.factory.UserServiceFactory;
 import cn.ou.service.UserService;
-import cn.ou.service.UserServlet;
 import cn.ou.service.impl.UserServiceImpl;
 
 /**
@@ -46,7 +49,13 @@ public class RegistServlet extends HttpServlet {
 		 * username	{"abc"}
 		 */
 		//页面中表单项 name 属性的值一定要和User类中属性名一样
-		BeanUtils.populate(user, request.getParameterMap());
+		try {
+			BeanUtils.populate(user, request.getParameterMap());
+		} catch (IllegalAccessException e1) {
+			e1.printStackTrace();
+		} catch (InvocationTargetException e1) {
+			e1.printStackTrace();
+		}
 		//3.数据校验（将信息响应到前端）
 		//调用user中的非空校验方法，来抛出自定义异常提示信息
 		try {
@@ -113,11 +122,24 @@ public class RegistServlet extends HttpServlet {
 		}
 		
 		//4.创建业务层对象
-		UserService userService = new UserServiceImpl();
+		//UserService userService = new UserServiceImpl();
+		//解耦 ----> 通过对类字节码的反射获取该对象的实例
+		//UserService userService = UserServiceFactory.getServiceFactory().getInstance();
+		//解耦---->当需要更多工厂类时，就要不停地去创建多个相似的工厂类，那干嘛不直接创建一个通用的工厂类？
+		//UserService userService = (UserService) BasicFactory.getBasicFactory().getInstance(UserService.class);
+		
+		/*
+		 * 进一步的解耦引出两个问题
+		 * 1、由于参数是个字符串，写错了没有提示
+		 * TODO 2、每次还需要强制类型转换(还没解决)
+		 */
+		UserService userService = BasicFactory.getBasicFactory().getInstance(UserService.class);
+		
+		
 		
 		//4.1.调用业务注册方法
 		try {
-			//TODO 继续完成创建业务层类和dao类的注册方法
+			//TODO 对升级后的注册页面（MVC模式）进行解耦（接口+配置文件+工厂）+利用DBUtil框架简化Dao的Sql语句
 			boolean result = userService.regist(user);
 			//4.2.注册成功
 			if(result){
@@ -139,16 +161,6 @@ public class RegistServlet extends HttpServlet {
 			request.getRequestDispatcher("/regist.jsp").
 				forward(request, response);
 		}
-		
-		
-		
-	
-		
-		
-		
-		
-		
-		
 		
 	}
 

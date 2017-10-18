@@ -8,7 +8,7 @@ import java.sql.Statement;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 /**
- * Êı¾İ¿â¹¤¾ßÀà
+ * æ•°æ®åº“å·¥å…·ç±»
  * @author Administrator
  *
  */
@@ -18,7 +18,7 @@ public class DaoUtils {
 	private static ComboPooledDataSource cpds = new ComboPooledDataSource();
 	
 	/**
-	 * »ñÈ¡Á¬½Ó³Ø
+	 * è·å–è¿æ¥æ± 
 	 * @return
 	 */
 	public static ComboPooledDataSource getPool(){
@@ -26,19 +26,19 @@ public class DaoUtils {
 	}
 	
 	/**
-	 * »ñÈ¡Á¬½Ó³ØÁ¬½Ó
-	 * @return »ñÈ¡Êı¾İ¿âÁ¬½Ó
-	 * @throws SQLException  »ñÈ¡Á¬½ÓÊ§°Ü
+	 * è·å–è¿æ¥æ± è¿æ¥
+	 * @return è·å–æ•°æ®åº“è¿æ¥
+	 * @throws SQLException  è·å–è¿æ¥å¤±è´¥
 	 */
 	public static Connection getConnection() throws SQLException{
 		return cpds.getConnection();
 	}
 	
 	/**
-	 * ¹Ø±Õ×ÊÔ´
-	 * @param conn ¹é»¹Êı¾İ¿âÁ¬½Ó
-	 * @param statement ¹Ø±Õ´«ÊäÆ÷
-	 * @param rs ¹Ø±Õ·µ»Ø½á¹û¼¯
+	 * å…³é—­èµ„æº
+	 * @param conn å½’è¿˜æ•°æ®åº“è¿æ¥
+	 * @param statement å…³é—­ä¼ è¾“å™¨
+	 * @param rs å…³é—­è¿”å›ç»“æœé›†
 	 */
 	public static void close(Connection conn,Statement statement,ResultSet rs){
 		if(rs != null){

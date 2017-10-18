@@ -4,9 +4,9 @@ public class WebUtils {
 	private WebUtils(){}
 	
 	/**
-	 * ÅĞ¶Ï×Ö·û´®ÊÇ·ñÎª¿Õ£¨null »òÕß ""£©
+	 * åˆ¤æ–­å­—ç¬¦ä¸²æ˜¯å¦ä¸ºç©ºï¼ˆnull æˆ–è€… ""ï¼‰
 	 * @param str
-	 * @return true:±íÊ¾×Ö·û´®Îª¿Õ
+	 * @return true:è¡¨ç¤ºå­—ç¬¦ä¸²ä¸ºç©º
 	 */
 	public static boolean isNull(String str){
 		boolean res = str == null || "".equals(str);
