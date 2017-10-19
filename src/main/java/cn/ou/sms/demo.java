@@ -1,4 +1,4 @@
-package cn.ou.Code;
+package cn.ou.sms;
 
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;

@@ -1,4 +1,4 @@
-package cn.ou.Web;
+package cn.ou.web;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.ou.Util.DaoUtils;
-import cn.ou.Util.MDUtil;
-import cn.ou.Util.WebUtils;
+import cn.ou.utils.DaoUtils;
+import cn.ou.utils.MDUtil;
+import cn.ou.utils.WebUtils;
 
 /**
  * 注册按钮触发的后台操作

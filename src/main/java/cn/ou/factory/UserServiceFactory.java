@@ -2,11 +2,11 @@ package cn.ou.factory;
 
 import java.util.Properties;
 
-import cn.ou.Util.PropUntils;
 import cn.ou.service.UserService;
+import cn.ou.utils.PropUntils;
 
 /**
- * 业务层的工厂类
+ * 业务层的UserService工厂类
  * @author Administrator
  *
  */
@@ -25,7 +25,7 @@ public class UserServiceFactory {
 	 * 通过getInstance方法来获取配置文件对应的参数的类字节码文件
 	 * @return 类字节码文件 -----> UserServiceImpl Java文件
 	 */
-	public static UserService getInstance(){
+	public UserService getInstance(){
 		//缺点：每次调用getInstance()都会加载一次config.properties文件，效率太低。
 		//创建属性文件的工具类，不管调用几次，应该只加载一次配置文件
 		/*Properties p = new Properties();

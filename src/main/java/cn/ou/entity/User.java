@@ -1,7 +1,7 @@
 package cn.ou.entity;
 
-import cn.ou.Util.WebUtils;
 import cn.ou.exception.MsgException;
+import cn.ou.utils.WebUtils;
 
 /**
  * 注册页面的主要参数的对象

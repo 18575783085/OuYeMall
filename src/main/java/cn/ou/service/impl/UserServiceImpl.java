@@ -15,11 +15,11 @@ import cn.ou.service.UserService;
 public class UserServiceImpl implements UserService {
 	
 	//private UserDao userDao = new UserDaoImpl();
-	//解耦 ----> 通过对类字节码的反射获取该对象的实例
+	//解耦 ----> UserDao工厂类 ---> 通过对类字节码的反射获取该对象的实例
 	//private UserDao userDao = UserDaoFactory.getDaoFactory().getInstance();
-	//进一步的解耦
+	//进一步的解耦(用通用工厂类)
 	//private UserDao userDao = (UserDao) BasicFactory.getBasicFactory().getInstance(UserDao.class);
-	//加上泛型
+	//解耦 ---> 用泛型来修饰数据类型
 	private UserDao userDao = BasicFactory.getBasicFactory().getInstance(UserDao.class);
 	/**
 	 * 用户登录的业务逻辑
@@ -49,4 +49,16 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	/*-----------------分割线----------------*/
+	
+	/**
+	 * 通过ajax来调用servlet进行判断用户输入的手机号码是否存在的业务逻辑
+	 */
+	public boolean checkPhone(String phone) {
+		//通过Dao接口来判断用户输入的手机号码是否存在方法来返回给servlet
+		return userDao.checkPhone(phone);
+	}
+
+	
+	
 }

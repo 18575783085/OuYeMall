@@ -1,4 +1,4 @@
-package cn.ou.Web;
+package cn.ou.web;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -15,11 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import cn.ou.Util.DaoUtils;
-import cn.ou.Util.MDUtil;
 import cn.ou.entity.User;
+import cn.ou.factory.BasicFactory;
 import cn.ou.service.UserService;
 import cn.ou.service.impl.UserServiceImpl;
+import cn.ou.utils.DaoUtils;
+import cn.ou.utils.MDUtil;
 
 /**
  * 处理用户的登录请求
@@ -32,8 +33,8 @@ import cn.ou.service.impl.UserServiceImpl;
 public class LoginServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1.处理请求参数乱码
-		request.setCharacterEncoding("utf-8");
+		/*//1.处理请求参数乱码
+		request.setCharacterEncoding("utf-8");*/
 		
 		//2.获取登录信息
 		String username = request.getParameter("username");
@@ -48,7 +49,13 @@ public class LoginServlet extends HttpServlet {
 		*/
 		/*创建业务层对象*/
 		//A1.业务层接口调用业务层的实现类
-		UserService userService = new UserServiceImpl();
+		//UserService userService = new UserServiceImpl();
+		//解耦--->UserService工厂类
+		//UserService userService = UserServiceFactory.getServiceFactory().getServiceFactory();
+		//解耦--->工厂模式(用通用工厂类)
+		//UserService userService = (UserService) BasicFactory.getBasicFactory().getInstance(UserService.class);
+		//解耦--->泛型(用通用工厂类)
+		UserService userService = BasicFactory.getBasicFactory().getInstance(UserService.class);
 		
 		//A2.调用业务层方法
 		User user = userService.login(username,password);

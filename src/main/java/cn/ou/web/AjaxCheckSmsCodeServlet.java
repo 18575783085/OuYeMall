@@ -1,4 +1,4 @@
-package cn.ou.Web;
+package cn.ou.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,10 +16,10 @@ public class AjaxCheckSmsCodeServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 1.处理响应正文乱码
+		/*// 1.处理响应正文乱码
 		response.setContentType("text/html;charset=utf-8");
 		// 1.1处理请求参数乱码
-		request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");*/
 		
 		//2.获取用户输入的验证码
 		String smsvalistr = request.getParameter("smsvalistr");

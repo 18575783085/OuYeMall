@@ -17,7 +17,7 @@
 	</head>
 	<body>
 		<h1>欢迎登陆OuYeMall</h1>
-		<form action="${pageContext.request.contextPath }/servlet/LoginServlet" method="POST">
+		<form action="${pageContext.request.contextPath }/servlet/LoginServlet" method="GET">
 			<table>
 				<%--
 					当用户来登陆时，获取请求中带过来的用户名，

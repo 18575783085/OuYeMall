@@ -1,4 +1,4 @@
-package cn.ou.Web;
+package cn.ou.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,7 +13,7 @@ import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsResponse;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 
-import cn.ou.Code.demo;
+import cn.ou.sms.demo;
 /**
  * 调用发短信接口
  * @author Administrator
@@ -27,10 +27,10 @@ public class AjaxCheckSmsServlet extends HttpServlet {
 	private static int message = 0;
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 1.处理响应正文乱码
+		/*// 1.处理响应正文乱码
 		response.setContentType("text/html;charset=utf-8");
 		// 1.1处理请求参数乱码
-		request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");*/
 		
 		//2.1.获取电话号码
 		String phone = request.getParameter("phonenumber");

@@ -1,10 +1,10 @@
 package cn.ou.factory;
 
-import cn.ou.Util.PropUntils;
 import cn.ou.dao.UserDao;
+import cn.ou.utils.PropUntils;
 
 /**
- * Dao的工厂类
+ * Dao的UserDao工厂类
  * @author Administrator
  *
  */

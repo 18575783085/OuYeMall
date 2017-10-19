@@ -1,4 +1,4 @@
-package cn.ou.Web;
+package cn.ou.web;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -15,9 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import cn.ou.Util.DaoUtils;
-import cn.ou.Util.MDUtil;
-import cn.ou.Util.WebUtils;
 import cn.ou.dao.UserDao;
 import cn.ou.entity.User;
 import cn.ou.exception.MsgException;
@@ -25,6 +22,9 @@ import cn.ou.factory.BasicFactory;
 import cn.ou.factory.UserServiceFactory;
 import cn.ou.service.UserService;
 import cn.ou.service.impl.UserServiceImpl;
+import cn.ou.utils.DaoUtils;
+import cn.ou.utils.MDUtil;
+import cn.ou.utils.WebUtils;
 
 /**
  * 注册按钮触发的后台操作
@@ -35,11 +35,11 @@ public class RegistServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//1.解决乱码
+		/*//1.解决乱码
 		//1.1解决请求参数乱码（post提交）
 		request.setCharacterEncoding("utf-8");
 		//1.2解决响应正文乱码
-		response.setContentType("text/html;charset=utf-8");
+		response.setContentType("text/html;charset=utf-8");*/
 		
 		//2.获取用户参数(用户的注册信息)
 		User user = new User();
@@ -123,15 +123,16 @@ public class RegistServlet extends HttpServlet {
 		
 		//4.创建业务层对象
 		//UserService userService = new UserServiceImpl();
-		//解耦 ----> 通过对类字节码的反射获取该对象的实例
+		//解耦 ----> UserService工厂类 ---> 通过对类字节码的反射获取该对象的实例
 		//UserService userService = UserServiceFactory.getServiceFactory().getInstance();
 		//解耦---->当需要更多工厂类时，就要不停地去创建多个相似的工厂类，那干嘛不直接创建一个通用的工厂类？
+		//(用通用工厂类)
 		//UserService userService = (UserService) BasicFactory.getBasicFactory().getInstance(UserService.class);
-		
 		/*
 		 * 进一步的解耦引出两个问题
 		 * 1、由于参数是个字符串，写错了没有提示
-		 * TODO 2、每次还需要强制类型转换(还没解决)
+		 * TODO 2、每次还需要强制类型转换
+		 * 解耦 --->用泛型(通用工厂类)来修饰数据类型
 		 */
 		UserService userService = BasicFactory.getBasicFactory().getInstance(UserService.class);
 		

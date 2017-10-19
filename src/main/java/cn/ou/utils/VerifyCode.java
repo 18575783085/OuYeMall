@@ -1,4 +1,4 @@
-package cn.ou.Util;
+package cn.ou.utils;
 
 import java.awt.Color;
 import java.awt.Font;

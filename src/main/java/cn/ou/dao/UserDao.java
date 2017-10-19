@@ -33,4 +33,13 @@ public interface UserDao {
 	 */
 	public int regist(User user) ;
 
+	/*------------------------------------------------------*/
+	
+	/**
+	 * 检查用户输入的手机号码是否存在
+	 * @param phone ： 用户输入的手机号码
+	 * @return true：表示已存在；false：表示不存在
+	 */
+	public boolean checkPhone(String phone);
+
 }

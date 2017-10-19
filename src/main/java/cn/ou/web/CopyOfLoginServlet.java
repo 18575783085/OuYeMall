@@ -1,4 +1,4 @@
-package cn.ou.Web;
+package cn.ou.web;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import cn.ou.Util.DaoUtils;
-import cn.ou.Util.MDUtil;
+import cn.ou.utils.DaoUtils;
+import cn.ou.utils.MDUtil;
 
 /**
  * 处理用户的登录请求

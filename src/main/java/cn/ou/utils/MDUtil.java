@@ -1,4 +1,4 @@
-package cn.ou.Util;
+package cn.ou.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

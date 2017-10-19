@@ -1,6 +1,6 @@
 package cn.ou.factory;
 
-import cn.ou.Util.PropUntils;
+import cn.ou.utils.PropUntils;
 
 /**
  * 通用工厂类
@@ -22,12 +22,12 @@ public class BasicFactory {
 	/**
 	 * 调用加载properties配置文件中获取相应的key对应的value值
 	 * @param key : 要获取对应的value值
+	 * @return 
 	 * @return 通过获取对应的value值参数来返回
-	 * 修改数据类型--->泛型
 	 * T:UserDao
 	 * Class<T>:UserDao.class
 	 */
-	public  <T> T getInstance(Class<T> intfClz){
+	public <T> T getInstance(Class<T> intfClz){
 		//获取配置文件中对应的参数
 		//String value = PropUntils.getProperty(key);
 		/*
@@ -46,13 +46,9 @@ public class BasicFactory {
 			Class clz = Class.forName(value);
 			//clz创建对象
 			return (T)clz.newInstance();
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
- 			e.printStackTrace();
-		}
+		} 
 		return null;
 	}
 }

@@ -1,4 +1,4 @@
-package cn.ou.Util;
+package cn.ou.utils;
 
 public class WebUtils {
 	private WebUtils(){}
