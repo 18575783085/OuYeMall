@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" href="${pageContext.request.contextPath }/css/foot.css"/>
+<link rel="stylesheet" href="${appPath}/css/foot.css"/>
 <div id="common_foot">
 	<p>
 		Copyright © 2017 Oye 版权所有 保留一切权利 苏B2-20130048号 | 京ICP备09062682号-9

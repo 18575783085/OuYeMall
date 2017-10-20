@@ -4,12 +4,12 @@
 	<head>
 		<title>欢迎注册OuYeMall</title>
 		<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" href="${pageContext.request.contextPath }/css/regist.css"/>
+		<link rel="stylesheet" href="${appPath}/css/regist.css"/>
 		
-		<script src="${pageContext.request.contextPath }/js/jquery-1.4.2.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.cookie.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath }/js/regist.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath }/js/sms.js"></script>
+		<script src="${appPath}/js/jquery-1.4.2.js"></script>
+		<script type="text/javascript" src="${appPath}/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="${appPath}/js/regist.js"></script>
+		<script type="text/javascript" src="${appPath}/js/sms.js"></script>
 		
 		<script type="text/javascript">
 		/* 使用Ajax校验用户名是否存在 */
@@ -23,11 +23,11 @@
 				return;
 			}
 			
-			setMsg("username","<img src='${pageContext.request.contextPath }/img/regist/1.gif' /> ");
+			setMsg("username","<img src='${appPath}/img/regist/1.gif' /> ");
 			//3.检查用户名是否存在
 			setTimeout(function(){
 				$("#username_msg").load(
-					"${pageContext.request.contextPath }/servlet/AjaxCheckUsernameServlet",
+					"${appPath}/servlet/AjaxCheckUsernameServlet",
 					{"username":username}
 				);
 				
@@ -54,11 +54,11 @@
 					}else{
 						//$("input[name='phonenumber']").next("span").html("<font color='#339933'>√ 手机号码输入正确</font>");
 						
-						setMsg("phonenumber","<img src='${pageContext.request.contextPath }/img/regist/1.gif' /> ");
+						setMsg("phonenumber","<img src='${appPath}/img/regist/1.gif' /> ");
 						/* 向后台发送处理数据（在数据库查找是否有存在该手机号码） */
 						setTimeout(function(){
 							$("input[name='phonenumber']").next("span").load(
-								"${pageContext.request.contextPath }/servlet/AjaxCheckPhoneServlet",
+								"${appPath}/servlet/AjaxCheckPhoneServlet",
 								{"phonenumber":phone}
 							);
 					
@@ -139,7 +139,7 @@
 						$.ajax({
 							    type:"POST",//用post方式传输
 							    dataType:"text",//数据格式：json
-							   	url:"${pageContext.request.contextPath }/servlet/AjaxCheckSmsServlet",//目标地址
+							   	url:"${appPath}/servlet/AjaxCheckSmsServlet",//目标地址
 							   	data:{"phonenumber":phone},
 							   	success:function (data){
 						      	data = parseInt(data,10);
@@ -184,7 +184,7 @@
 					$.ajax({
 						    type:"POST",//用post方式传输
 						    dataType:"text",//数据格式：json
-						    url:"${pageContext.request.contextPath }/servlet/AjaxCheckSmsCodeServlet",//目标地址
+						    url:"${appPath}/servlet/AjaxCheckSmsCodeServlet",//目标地址
 						    data:{"smsvalistr":smsvalistr,"phonenumber":phone},
 						    success:function (data){
 						    data = parseInt(data,10);
@@ -204,7 +204,7 @@
 	</head>
 	<body>
 		<form onsubmit="return checkForm()"
-		action="${pageContext.request.contextPath }/servlet/RegistServlet" method="POST">
+		action="${appPath}/servlet/RegistServlet" method="POST">
 		<%//生成令牌
 			String token = UUID.randomUUID().toString();
 			//将token保存到session中
@@ -300,7 +300,7 @@
 						<input type="text" name="valistr"
 						value="<%= request.getParameter("valistr") == null ? "" : request.getParameter("valistr") %>"
 						/>
-						<img src="${pageContext.request.contextPath }/servlet/ValiImageServlet" width="" height="" alt="加载失败" title="看不清点击刷新验证码"
+						<img src="${appPath}/servlet/ValiImageServlet" width="" height="" alt="加载失败" title="看不清点击刷新验证码"
 						id="verification" onclick="refreshcode(this)"
 						/>
 						<span></span>
@@ -317,7 +317,7 @@
 	<script type="text/javascript">
 		/* 点击图片刷新验证码 */
 		function refreshcode(thisobj){
-			thisobj.src = "${pageContext.request.contextPath }/servlet/ValiImageServlet?ye="+new Date().getTime();
+			thisobj.src = "${appPath}/servlet/ValiImageServlet?ye="+new Date().getTime();
 		}
 	</script>
 	

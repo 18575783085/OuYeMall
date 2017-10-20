@@ -20,6 +20,7 @@ import cn.ou.factory.BasicFactory;
 import cn.ou.service.UserService;
 import cn.ou.service.impl.UserServiceImpl;
 import cn.ou.utils.DaoUtils;
+import cn.ou.utils.MD5Utils;
 import cn.ou.utils.MDUtil;
 
 /**
@@ -58,6 +59,8 @@ public class LoginServlet extends HttpServlet {
 		UserService userService = BasicFactory.getBasicFactory().getInstance(UserService.class);
 		
 		//A2.调用业务层方法
+		//由于注册时使用了MD5加密，所以登录时，先将用户输入的密码进行加密，再跟数据库的密码进行匹配
+		password = MD5Utils.md5(password);
 		User user = userService.login(username,password);
 		
 		//A3.判断登陆是否成功
@@ -66,6 +69,23 @@ public class LoginServlet extends HttpServlet {
 			request.setAttribute("msg", "用户名或密码错误！");
 			request.getRequestDispatcher("/login.jsp").forward(request, response);
 		}else {
+			//TODO 30天自动登录
+			//判断是否勾选30天自动登录
+			if("true".equals(request.getParameter("autologin"))){//勾选
+				//创建Cookie对象,把用户名和密码存进Cookie
+				Cookie autoLoginCK = new Cookie("autologin", URLEncoder.encode(username+","+password,"UTF-8"));
+				
+				//设置最大存活时间
+				autoLoginCK.setMaxAge(3600*60*60);//30天
+				//设置路径
+				autoLoginCK.setPath("/");
+				//添加Cookie
+				response.addCookie(autoLoginCK);
+				
+				//下一步---->编写一个过滤器类autologin
+			}
+			
+			
 			
 			//3.2.1.判断是否需要记住用户名(判断复选按钮的选择属性)
 			if("true".equals(remname)){//3.2.3.1.如果勾选记住用户名

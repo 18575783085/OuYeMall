@@ -23,6 +23,7 @@ import cn.ou.factory.UserServiceFactory;
 import cn.ou.service.UserService;
 import cn.ou.service.impl.UserServiceImpl;
 import cn.ou.utils.DaoUtils;
+import cn.ou.utils.MD5Utils;
 import cn.ou.utils.MDUtil;
 import cn.ou.utils.WebUtils;
 
@@ -140,6 +141,9 @@ public class RegistServlet extends HttpServlet {
 		
 		//4.1.调用业务注册方法
 		try {
+			//使用老师介绍的MD5加密算法----它的实现效果-->产生出一个固定的密匙
+			user.setPassword(MD5Utils.md5(user.getPassword()));
+			
 			//TODO 对升级后的注册页面（MVC模式）进行解耦（接口+配置文件+工厂）+利用DBUtil框架简化Dao的Sql语句
 			boolean result = userService.regist(user);
 			//4.2.注册成功

@@ -7,12 +7,12 @@ import java.sql.SQLException;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
-import org.apache.commons.dbutils.handlers.BeanHandler;
+//import org.apache.commons.dbutils.handlers.BeanHandler;
 
 import cn.ou.dao.UserDao;
 import cn.ou.entity.User;
 import cn.ou.utils.DaoUtils;
-//import cn.ou.Util.BeanHandler;
+import cn.ou.utils.BeanHandler;
 /**
  * Dao的实现类
  * 主要负责执行SQL的CURD指令
@@ -65,7 +65,7 @@ public class UserDaoImpl implements UserDao {
 			}*/
 			
 			/*版本1*/
-			//1.创建QueryRunner对象--->获取连接池对象
+			/*//1.创建QueryRunner对象--->获取连接池对象
 			QueryRunner qr = new QueryRunner(DaoUtils.getPool());
 			//2.编写sql语句
 			String sql = "select * from user where username=? and password=?";
@@ -73,15 +73,15 @@ public class UserDaoImpl implements UserDao {
 			//我的理解：query(参数1，参数2，参数3)--->参数1:传入sql语句--->参数2:ResultSetHandler接口里面的子接口方法--->参数3:为占位符赋值
 			User query = qr.query(sql, new BeanHandler<User>(User.class),username,password);
 			//4.存在则返回一个用户对象
-			return query;
+			return query;*/
 			
 			/*版本2*/
-			/*//1.编写sql语句
-			String sql = "select * from username where username=? and password=?";
+			//1.编写sql语句
+			String sql = "select * from user where username=? and password=?";
 			//2.调用query方法来执行sql语句，并返回结果
 			User query = DaoUtils.query(sql, new BeanHandler<User>(User.class), username,password);
 			//3.存在则返回一个用户对象
-			return query;*/
+			return query;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -115,22 +115,22 @@ public class UserDaoImpl implements UserDao {
 			return rs.next();*/
 			
 			/*版本1*/
-			//1.创建QueryRunner对象---->获取连接池对象
+			/*//1.创建QueryRunner对象---->获取连接池对象
 			QueryRunner qr = new QueryRunner(DaoUtils.getPool());
 			//2.编写sql语句
 			String sql = "select * from user where username=?";
 			//3.执行sql语句，并返回结果
 			User query = qr.query(sql, new BeanHandler<User>(User.class), username);
 			//4.有结果表示该用户已存在----->反之返回不存在
-			return query != null;
+			return query != null;*/
 			
 			/*版本2*/
-			/*//1.编写sql语句
+			//1.编写sql语句
 			String sql = "select * from user where username=?";
 			//2.执行sql语句，并返回结果
 			User query = DaoUtils.query(sql, new BeanHandler<User>(User.class), username);
 			//3.有结果表示该用户已存在---->反之返回不存在
-			return query != null;*/
+			return query != null;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -166,7 +166,7 @@ public class UserDaoImpl implements UserDao {
 			return row;*/
 			
 			/*版本1*/
-			//1.创建QueryRunner对象--->获取连接池对象
+			/*//1.创建QueryRunner对象--->获取连接池对象
 			QueryRunner qr = new QueryRunner(DaoUtils.getPool());
 			//2.编写sql语句
 			String sql = "insert into user " +
@@ -177,10 +177,10 @@ public class UserDaoImpl implements UserDao {
 			//update(参数1，参数2)--->参数1：传入sql语句--->参数2：为占位符赋值
 			int updateRow = qr.update(sql, user.getUsername(),user.getPassword(),user.getNickname(),user.getEmail(),user.getPhone());
 			//4.返回结果(影响行数)--->有影响行数表示插入成功-->反之则插入失败
-			return updateRow;
+			return updateRow;*/
 			
 			/*版本2*/
-			/*//1.编写sql语句
+			//1.编写sql语句
 			String sql = "insert into user " +
 					"(username,password,nickname,email,phone)" +
 					"values" +
@@ -189,7 +189,7 @@ public class UserDaoImpl implements UserDao {
 			int updateRow = DaoUtils.update(sql, user.getUsername(),user.getPassword(),user.getNickname(),user.getEmail(),user.getPhone());
 			
 			//3.返回结果(影响行数)--->有影响行数表示插入成功-->反之则插入失败
-			return updateRow;*/
+			return updateRow;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -206,13 +206,13 @@ public class UserDaoImpl implements UserDao {
 		/*使用版本1*/
 		try {
 			//1.创建QuerRunner对象--->获取数据库对象
-			QueryRunner qr = new QueryRunner(DaoUtils.getPool());
+			//QueryRunner qr = new QueryRunner(DaoUtils.getPool());
 			
 			//2.编写sql语句
 			String sql = "select * from user where phone=?";
 			
 			//3.执行sql语句，并返回结果集
-			User query = qr.query(sql, new BeanHandler<User>(User.class),phone);
+			User query = DaoUtils.query(sql, new BeanHandler<User>(User.class),phone);
 			
 			//4.如果结果集不等于null则为存在，
 			return query != null;

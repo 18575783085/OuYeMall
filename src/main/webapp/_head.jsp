@@ -2,7 +2,7 @@
 <!-- 引入JSTL标签库 -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/css/head.css"/>
+<link rel="stylesheet" href="${appPath}/css/head.css"/>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
 
 <div id="common_head">
@@ -14,32 +14,32 @@
 			
 			if(username != null){
 			%>
-			欢迎&nbsp;<%= (String) username %>&nbsp;&nbsp;|&nbsp;<a href="${pageContext.request.contextPath }/servlet/LogoutServlet">注销</a>
+			欢迎&nbsp;<%= (String) username %>&nbsp;&nbsp;|&nbsp;<a href="${appPath}/servlet/LogoutServlet">注销</a>
 				
 		<%	}else{ %>
-			<a href="${pageContext.request.contextPath }/login.jsp">登录</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-			<a href="${pageContext.request.contextPath }/regist.jsp">注册</a>
+			<a href="${appPath}/login.jsp">登录</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="${appPath}/regist.jsp">注册</a>
 			
 		<%} %> --%>
-		<c:if test="${sessionScope.loginUser != null }" var="flag">
-			欢迎&nbsp;${sessionScope.loginUser }&nbsp;&nbsp;|&nbsp;<a href="${pageContext.request.contextPath }/servlet/LogoutServlet">注销</a>
+		<c:if test="${sessionScope.username != null }" var="flag">
+			欢迎&nbsp;${sessionScope.username }&nbsp;&nbsp;|&nbsp;<a href="${appPath}/servlet/LogoutServlet">注销</a>
 		</c:if>		
 		<c:if test="${!flag }">
-			<a href="${pageContext.request.contextPath }/login.jsp">登录</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-			<a href="${pageContext.request.contextPath }/regist.jsp">注册</a>
+			<a href="${appPath}/login.jsp">登录</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="${appPath}/regist.jsp">注册</a>
 		</c:if>
 		
 		</div>
 	</div>
 	<div id="line2">
-		<img id="logo" src="${pageContext.request.contextPath }/img/head/logo.jpg"/>
+		<img id="logo" src="${appPath}/img/head/logo.jpg"/>
 		<input type="text" name=""/>
 		<input type="button" value="搜 索"/>
 		<span id="goto">
 			<a id="goto_order" href="#">我的订单</a>
 			<a id="goto_cart" href="#">我的购物车</a>
 		</span>
-		<img id="erwm" src="${pageContext.request.contextPath }/img/head/qr.jpg"/>
+		<img id="erwm" src="${appPath}/img/head/qr.jpg"/>
 	</div>
 	<div id="line3">
 		<div id="content">

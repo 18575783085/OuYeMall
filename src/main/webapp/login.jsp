@@ -4,9 +4,9 @@
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" href="${pageContext.request.contextPath }/css/login.css"/>
+		<link rel="stylesheet" href="${appPath}/css/login.css"/>
 		<title>OuYeMall欢迎您登陆</title>
-<%-- 		<script src="${pageContext.request.contextPath }/js/jquery-1.4.2.js"></script>
+<%-- 		<script src="${appPath}/js/jquery-1.4.2.js"></script>
 		 <!-- 使用el+jstl对java解码进行简化 -->
 		 <script>
 		 	$(function(){
@@ -17,7 +17,7 @@
 	</head>
 	<body>
 		<h1>欢迎登陆OuYeMall</h1>
-		<form action="${pageContext.request.contextPath }/servlet/LoginServlet" method="GET">
+		<form action="${appPath}/servlet/LoginServlet" method="POST">
 			<table>
 				<%--
 					当用户来登陆时，获取请求中带过来的用户名，
