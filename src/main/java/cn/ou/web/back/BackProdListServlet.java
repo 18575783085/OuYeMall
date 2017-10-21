@@ -12,7 +12,7 @@ import cn.ou.entity.Product;
 import cn.ou.factory.BasicFactory;
 import cn.ou.service.ProdService;
 /**
- * 后台商品管理-----添加、删除、修改商品
+ * 后台商品管理-----添加、删除、修改商品 
  * @author Administrator
  *
  */

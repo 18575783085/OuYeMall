@@ -18,4 +18,29 @@ public interface ProdDao {
 	 */
 	public List<Product> findAll();
 
+	/**
+	 * 修改商品的库存
+	 * @param id：商品id
+	 * @param pnum：修改后的商品数据
+	 * @return 返回影响的行数
+	 */
+	public int changePnum(String id, int pnum);
+
+	/**
+	 * 根据商品id删除商品信息
+	 * @param id：商品id
+	 * @return true：表示删除成功，false：表示删除失败
+	 */
+	public int deleteProdById(String id);
+
+	/**
+	 * 根据关键字查询符合条件的商品
+	 * @param name：商品名称关键字
+	 * @param cate：商品分类关键字
+	 * @param min：价格区间最小值
+	 * @param max：价格区间最大值
+	 * @return 返回符合条件的所有商品
+	 */
+	public List<Product> findAllById(String name, String cate, Double min, Double max);
+
 }

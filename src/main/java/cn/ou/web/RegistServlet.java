@@ -28,7 +28,7 @@ import cn.ou.utils.MDUtil;
 import cn.ou.utils.WebUtils;
 
 /**
- * 注册按钮触发的后台操作
+ * 注册按钮触发的后台操作 
  * @author Administrator
  *
  */

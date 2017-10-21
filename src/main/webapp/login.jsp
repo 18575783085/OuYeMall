@@ -6,14 +6,20 @@
 		<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
 		<link rel="stylesheet" href="${appPath}/css/login.css"/>
 		<title>OuYeMall欢迎您登陆</title>
-<%-- 		<script src="${appPath}/js/jquery-1.4.2.js"></script>
+ 		<script src="${appPath}/js/jquery-1.4.2.js"></script>
 		 <!-- 使用el+jstl对java解码进行简化 -->
 		 <script>
 		 	$(function(){
-		 		var uname = "${cookie.remname.value}";
-		 		$("#username").val(decodeURI(uname));
+		 		/*  步骤：获取值--->转码--->赋值 */
+		 		//获取username对应的输入框
+		 		$ipt = ${"input[name=username]"}[0];
+		 		//转码
+		 		var usernameval = decodeURI($ipt.val());
+		 		
+		 		//修改输入框的值
+		 		$ipt.val(usernameval);
 		 	});
-		 </script> --%>
+		 </script>
 	</head>
 	<body>
 		<h1>欢迎登陆OuYeMall</h1>
@@ -24,7 +30,7 @@
 					并赋值给用户名输入框完成记住用户名的操作
 				 --%>
 				
- 				<%
+ 				<%-- <%
 					Cookie[] cs = request.getCookies();
 					String username = "";
 					
@@ -39,16 +45,16 @@
 						}
 					}
 				 %> 
-
+ --%>
 				 <tr>
 				 	<td colspan="2" style="color:red;text-align:center">
-				 		<%= request.getAttribute("msg") == null ? "" : request.getAttribute("msg") %>
+				 		${msg }
 				 	</td>
 				 </tr>
 				<tr>
 					<td class="tdx">用户名：</td>
 					<td><input type="text" name="username"
-							value="<%= username %>"/></td>
+							value="${cookie.remname.value} }"/></td>
 				</tr>
 				<tr>
 					<td class="tdx">密&nbsp;&nbsp; 码：</td>
@@ -57,7 +63,7 @@
 				<tr>
 					<td colspan="2">
 						<input type="checkbox" name="remname" value="true"
-							<%= "".equals(username) ? "" : "checked='checked'" %>
+							${empty cookie.remname ? "" : "checked = 'checked'" }
 						/>记住用户名
 						<input type="checkbox" name="autologin" value="true"/>30天内自动登陆
 					</td>

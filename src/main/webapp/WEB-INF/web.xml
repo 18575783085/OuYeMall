@@ -74,6 +74,26 @@
     <servlet-name>BackProdListServlet</servlet-name>
     <servlet-class>cn.ou.web.back.BackProdListServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ProdImgServlet</servlet-name>
+    <servlet-class>cn.ou.web.back.ProdImgServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AjaxChangePnumServlet</servlet-name>
+    <servlet-class>cn.ou.web.back.AjaxChangePnumServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>BackProdDeleteServlet</servlet-name>
+    <servlet-class>cn.ou.web.back.BackProdDeleteServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ProdListServlet</servlet-name>
+    <servlet-class>cn.ou.web.ProdListServlet</servlet-class>
+  </servlet>
+
+
+
+
 
 
 
@@ -116,6 +136,22 @@
   <servlet-mapping>
     <servlet-name>BackProdListServlet</servlet-name>
     <url-pattern>/back/BackProdListServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ProdImgServlet</servlet-name>
+    <url-pattern>/ProdImgServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AjaxChangePnumServlet</servlet-name>
+    <url-pattern>/back/AjaxChangePnumServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BackProdDeleteServlet</servlet-name>
+    <url-pattern>/back/BackProdDeleteServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ProdListServlet</servlet-name>
+    <url-pattern>/ProdListServlet</url-pattern>
   </servlet-mapping>	
   
   <welcome-file-list>

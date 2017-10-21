@@ -4,7 +4,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 /**
  * ServletContext监听器-----通过初始化时，获取web应用路径，返回去前台
- * @author Administrator 
+ * @author Administrator  
  *
  */
 public class MyServletContextListener implements ServletContextListener {
