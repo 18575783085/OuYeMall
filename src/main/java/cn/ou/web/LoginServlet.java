@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/*//1.处理请求参数乱码
-		request.setCharacterEncoding("utf-8");*/
+		request.setCharacterEncoding("utf-8");*/ 
 		
 		//2.获取登录信息
 		String username = request.getParameter("username");
@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
 		
 		//A2.调用业务层方法
 		//由于注册时使用了MD5加密，所以登录时，先将用户输入的密码进行加密，再跟数据库的密码进行匹配
-		password = MD5Utils.md5(password);
+		//password = MD5Utils.md5(password);
 		User user = userService.login(username,password);
 		
 		//A3.判断登陆是否成功
@@ -73,7 +73,12 @@ public class LoginServlet extends HttpServlet {
 			//判断是否勾选30天自动登录
 			if("true".equals(request.getParameter("autologin"))){//勾选
 				//创建Cookie对象,把用户名和密码存进Cookie
-				Cookie autoLoginCK = new Cookie("autologin", URLEncoder.encode(username+","+password,"UTF-8"));
+				Cookie autoLoginCK = new Cookie("autologin", 
+						URLEncoder.encode(username+","+password,"UTF-8"));
+				/*
+				 * Cookie autoLoginCK = new Cookie("autologin", username+","+password);
+				 * 异常：java.lang.IllegalArgumentException: Control character in cookie value or attribute.
+				 */
 				
 				//设置最大存活时间
 				autoLoginCK.setMaxAge(3600*60*60);//30天
@@ -116,8 +121,8 @@ public class LoginServlet extends HttpServlet {
 			//创建session对象，向session保存当前用户的用户名
 			HttpSession session = request.getSession();
 			
-			//将用户名和密码保存进session中
-			session.setAttribute("username", username);
+			//将用户名和密码(user对象类的用户信息)保存进session中
+			session.setAttribute("user", user);
 			//session.setAttribute("password", password);
 			
 			

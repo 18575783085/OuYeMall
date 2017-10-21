@@ -5,7 +5,7 @@ package cn.ou.exception;
  *
  */
 public class MsgException extends Exception {
-	public MsgException(){
+	public MsgException(){ 
 		super();
 	}
 	

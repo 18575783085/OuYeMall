@@ -37,7 +37,7 @@ public class RegistServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		/*//1.解决乱码
-		//1.1解决请求参数乱码（post提交）
+		//1.1解决请求参数乱码（post提交） 
 		request.setCharacterEncoding("utf-8");
 		//1.2解决响应正文乱码
 		response.setContentType("text/html;charset=utf-8");*/
@@ -142,7 +142,7 @@ public class RegistServlet extends HttpServlet {
 		//4.1.调用业务注册方法
 		try {
 			//使用老师介绍的MD5加密算法----它的实现效果-->产生出一个固定的密匙
-			user.setPassword(MD5Utils.md5(user.getPassword()));
+			//user.setPassword(MD5Utils.md5(user.getPassword()));
 			
 			//TODO 对升级后的注册页面（MVC模式）进行解耦（接口+配置文件+工厂）+利用DBUtil框架简化Dao的Sql语句
 			boolean result = userService.regist(user);
@@ -157,15 +157,19 @@ public class RegistServlet extends HttpServlet {
 				response.getWriter().write(
 						"<h1 style='color:red;text-align:center'>" +
 						"系统错误，请重新注册...</h1>");
+				//解决注册失败时，用户信息没有回填到页面
+				//解决方案：由于定时刷新，导致用户信息在第一次请求响应就结束了，所以需要通过地址？拼接参数来进行对注册页面传参
 				response.setHeader("Refresh", "3;url="
-						+request.getContextPath()+"/regist.jsp");
+						+request.getContextPath()+"/regist.jsp?username="+user.getUsername()+"&password="+user.getPassword()+
+												"&passwor2="+user.getPassword2()+"&nickname="+user.getNickname()+"&email="+user.getEmail()+
+												"&phonenumber="+user.getPhone()+"&smsvalistr="+user.getSmsvalistr()+"&valistr="+user.getValistr());
 			}
 		} catch (MsgException e) {
 			e.printStackTrace();
 			request.setAttribute("msg", e.getMessage());
 			request.getRequestDispatcher("/regist.jsp").
 				forward(request, response);
-		}
+		} 
 		
 	}
 

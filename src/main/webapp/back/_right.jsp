@@ -11,7 +11,7 @@
    			background-color:#ededed;
    			font-family:微软雅黑;
    			font-size:14px;
-   			background-image:url(${pageContext.request.contextPath }/img/backend/3.jpg);
+   			background-image:url(${appPath }/img/backend/3.jpg);
    			background-repeat:no-repeat;
    			background-position:inherit;
    			background-size:cover;

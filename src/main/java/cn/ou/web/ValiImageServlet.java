@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import cn.ou.utils.VerifyCode;
 
-public class ValiImageServlet extends HttpServlet {
+public class ValiImageServlet extends HttpServlet { 
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

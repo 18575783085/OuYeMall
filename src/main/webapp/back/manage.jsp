@@ -10,10 +10,10 @@
 	</head>
 	<!-- frameset组织页面结构 -->
 	<frameset rows="14%, 86%" frameborder="0" framespacing="0">
-		<frame src="${pageContext.request.contextPath }/back/_top.jsp" noresize="noresize"/>
+		<frame src="${appPath }/back/_top.jsp" noresize="noresize"/>
 		<frameset cols="14%, 86%" frameborder="0" framespacing="0">
-			<frame src="${pageContext.request.contextPath }/back/_left.jsp" noresize="noresize"/>
-			<frame src="${pageContext.request.contextPath }/back/_right.jsp" name="rightFrame"  noresize="noresize"/>
+			<frame src="${appPath }/back/_left.jsp" noresize="noresize"/>
+			<frame src="${appPath }/back/_right.jsp" name="rightFrame"  noresize="noresize"/>
 		</frameset>
 	</frameset>
 	<body>

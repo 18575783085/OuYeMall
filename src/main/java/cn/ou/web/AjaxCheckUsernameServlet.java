@@ -23,7 +23,7 @@ import cn.ou.utils.DaoUtils;
 public class AjaxCheckUsernameServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException { 
 		/*//1.处理响应正文乱码
 		response.setContentType("text/html;charset=utf-8");
 		//1.1处理请求参数乱码

@@ -18,7 +18,7 @@ import javax.imageio.ImageIO;
  *
  */
 public class VerifyCode {
-	/**
+	/** 
 	 * 图片的宽
 	 */
 	private static int width = 120;

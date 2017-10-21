@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 /**
  * 模拟Dbutils中的ResultSetHandler接口的底层
- * @author Administrator
+ * @author Administrator 
  *
  */
 public interface ResultSetHandler<T> {

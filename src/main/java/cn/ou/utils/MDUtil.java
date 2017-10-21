@@ -11,7 +11,7 @@ import java.util.Arrays;
  * @author Administrator
  *
  */
-public class MDUtil {
+public class MDUtil { 
 	/**
 	 * 声明16进制字符串常量
 	 */

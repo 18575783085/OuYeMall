@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 /**
  * 解决全站乱码-----过滤器
  * 1、直接统一设置字符集，而不需要每一个servlet都单独设置字符集解码
- * @author Administrator
+ * @author Administrator 
  *
  */
 public class EncodeFilter implements Filter {
@@ -36,8 +36,10 @@ public class EncodeFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		//处理响应正文乱码
 		response.setContentType("text/html;charset="+encode);
+		//装饰者模式
+		MyHttpSR req = new MyHttpSR((HttpServletRequest)request);
 		//放行
-		chain.doFilter(new MyHttpSR((HttpServletRequest)request), response);
+		chain.doFilter(req, response);
 
 	}
 	

@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
  * @author Administrator
  *
  */
-public class MD5Utils {
+public class MD5Utils { 
 	/**
 	 * 使用MD5的算法进行加密
 	 * @param plainText ：传入需要加密的字符串

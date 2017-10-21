@@ -12,7 +12,7 @@ import cn.ou.entity.User;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 /**
- * 数据库工具类
+ * 数据库工具类 
  * @author Administrator
  *
  */

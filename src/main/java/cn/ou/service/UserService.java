@@ -15,7 +15,7 @@ public interface UserService {
 	 * 反之返回null
 	 * @param username ：用户名
 	 * @param password ：密码
-	 * @return 存在则返回User user ，不存在则返回null
+	 * @return 存在则返回User user ，不存在则返回null 
 	 */
 	public User login(String username, String password);
 	

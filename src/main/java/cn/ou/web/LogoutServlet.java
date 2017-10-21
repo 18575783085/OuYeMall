@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 /**
  * 注销用户
- * @author Administrator
+ * @author Administrator 
  *
  */
 public class LogoutServlet extends HttpServlet {

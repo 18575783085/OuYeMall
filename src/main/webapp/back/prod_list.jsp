@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" isELIgnored="false" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -53,22 +54,23 @@
 	
 	
 <%-- 通过jstl+el获取所有商品组成的list集合, 遍历显示 --%>
+	<c:forEach items="${requestScope.list }" var="prod">
 		<tr>
 			<td>
-				<img width="120px" height="120px" src="#" alt="" >
+				<img width="120px" height="120px" src="${appPath }${prod.imgurl}" alt="" >
 			</td>
-			<td>1111</td>
-			<td>爱疯x</td>
-			<td>手机数码</td>
-			<td>6888</td>
+			<td>${prod.id }</td>
+			<td>${prod.name }</td>
+			<td>${prod.category }</td>
+			<td>${prod.price }</td>
 			<td>
-				<input type="text" id="#" class="pnum" oldPnum="#" value="#"/>
+				<input type="text" id="#" class="pnum" oldPnum="#" value="${prod.pnum}"/>
 			</td>
-			<td>优点就是贵....</td>
+			<td>${prod.description }</td>
 			<td><a class="del" href="javascript:void(0)">删 除</a></td>
 		</tr>	
 
-
+	</c:forEach>
 	</table>
 </body>
 </html>

@@ -218,9 +218,7 @@
 					<td style="color:red;text-align:center;" colspan="2" >
 						<!-- 如果后台返回信息（参数为空），在此处获取提示消息提示用户
 							如果后台无返回信息（参数不为空），则此处为空白  -->
-						<%=
-							request.getAttribute("msg") ==  null  ? "": request.getAttribute("msg") 
-						%>
+						${msg }
 					</td>
 				</tr>
 				<tr>
@@ -228,7 +226,7 @@
 					<td>
 						<input type="text" name="username"
 						onblur="checkUsername(this)"
-						value="<%= request.getParameter("username") == null ? "" : request.getParameter("username") %>"
+						value="${param.username }"
 						/>
 						<span id="username_msg"></span>
 					</td>
@@ -238,7 +236,7 @@
 					<td>
 						<input type="password" name="password"
 						onblur="checkNull('password','密码不能为空')"
-						value="<%= request.getParameter("password") == null ? "" : request.getParameter("password") %>"
+						value="${param.password }"
 						/>
 						<span></span>
 					</td>
@@ -248,7 +246,7 @@
 					<td>
 						<input type="password" name="password2"
 						onblur="checkPassword('password','两次密码不一致')"
-						value="<%= request.getParameter("password2") == null ? "" : request.getParameter("password2") %>"
+						value="${param.password2 }"
 						/>
 						<span></span>
 					</td>
@@ -258,7 +256,7 @@
 					<td>
 						<input type="text" name="nickname"
 						onblur="checkNull('nickname','呢称不能为空')"
-						value="<%= request.getParameter("nickname") == null ? "" : request.getParameter("nickname") %>"
+						value="${param.nickname }"
 						/>
 						<span></span>
 					</td>
@@ -268,7 +266,7 @@
 					<td>
 						<input type="text" name="email"
 						onblur="checkEmail('email','邮箱格式不正确')"
-						value="<%= request.getParameter("email") == null ? "" : request.getParameter("email") %>"
+						value="${param.email }"
 						/>
 						<span></span>
 					</td>
@@ -278,7 +276,7 @@
 					<td>
 						<input type="text" name="phonenumber"
 						onblur="checkPhone()"
-						value="<%= request.getParameter("phonenumber") == null ? "" : request.getParameter("phonenumber") %>"
+						value="${param.phonenumber }"
 						/>	
 						<span></span>
 					</td>
@@ -288,7 +286,7 @@
 					<td>
 						<input type="text" name="smsvalistr"
 						onblur="CheckSmsCode()"
-						value="<%= request.getParameter("smsvalistr") == null ? "" : request.getParameter("smsvalistr") %>"
+						value="${param.smsvalistr }"
 						/>
 						<input type="button" value="获取验证码" id="btn"/>	
 						<span id="sms_msg"></span>
@@ -298,7 +296,7 @@
 					<td class="tds">验证码：</td>
 					<td>
 						<input type="text" name="valistr"
-						value="<%= request.getParameter("valistr") == null ? "" : request.getParameter("valistr") %>"
+						value="${param.valistr }"
 						/>
 						<img src="${appPath}/servlet/ValiImageServlet" width="" height="" alt="加载失败" title="看不清点击刷新验证码"
 						id="verification" onclick="refreshcode(this)"

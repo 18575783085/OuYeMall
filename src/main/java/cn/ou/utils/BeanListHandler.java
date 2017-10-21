@@ -41,6 +41,7 @@ public class BeanListHandler<T> implements ResultSetHandler<List<T>>{
 					//获取set方法
 					Method setMethod = pd.getWriteMethod();
 					try {
+						//执行set方法
 						setMethod.invoke(t, rs.getObject(name));
 					} catch (SQLException e) {
 						continue;

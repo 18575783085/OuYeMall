@@ -3,7 +3,7 @@ package cn.ou.dao;
 import cn.ou.entity.User;
 
 /**
- * Dao接口
+ * 用户Dao接口
  * 数据库语句
  * @author Administrator
  *

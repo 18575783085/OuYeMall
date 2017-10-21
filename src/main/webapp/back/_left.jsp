@@ -41,7 +41,7 @@
 	</head>
 	<body margin="0">
 		<div id="menu_bar">
-			<div><a href="${pageContext.request.contextPath}/back/prod_list.jsp" target="rightFrame">&gt; 商品管理</a></div>
+			<div><a href="${appPath}/back/BackProdListServlet" target="rightFrame">&gt; 商品管理</a></div>
 			<div><a href="prod_list.html" target="rightFrame">&gt; 用户管理</a></div>
 			<div><a href="prod_list.html" target="rightFrame">&gt; 权限管理</a></div>
 			<div><a href="prod_list.html" target="rightFrame">&gt; 订单管理</a></div>

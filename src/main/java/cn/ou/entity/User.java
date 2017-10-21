@@ -3,12 +3,12 @@ package cn.ou.entity;
 import cn.ou.exception.MsgException;
 import cn.ou.utils.WebUtils;
 
-/**
+/** 
  * 注册页面的主要参数的对象
  * @author Administrator
  *
  */
-public class User {
+public class User { 
 	/**
 	 * 注册用户序号(唯一)
 	 */

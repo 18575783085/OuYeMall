@@ -28,7 +28,7 @@ public class AutoLoginFilter implements Filter {
 		HttpServletRequest request2 = (HttpServletRequest) request;
 		
 		//1.2、获取session中登录的用户信息
-		Object un = request2.getSession().getAttribute("username");
+		Object un = request2.getSession().getAttribute("user");
 		
 		//1.3、判断是否为未登录
 		if(un == null){//为空则未登录
@@ -52,6 +52,10 @@ public class AutoLoginFilter implements Filter {
 				if(ck != null){//不为空
 					//6、获取用户名和密码(cookie的值)，并进行URL反向处理
 					String cookieValue = URLDecoder.decode(ck.getValue(), "UTF-8");
+					/*
+					 * String cookieValue = ck.getValue();
+					 * 异常：java.lang.IllegalArgumentException: Control character in cookie value or attribute.
+					 */
 					
 					//7、把获取的cookie值进行拆分
 					String[] arrCookieValue = cookieValue.split(",");
@@ -68,7 +72,7 @@ public class AutoLoginFilter implements Filter {
 					if(user != null){
 						//不为空，则表示用户存在
 						//把用户设置存进到session域中
-						request2.getSession().setAttribute("username", user);
+						request2.getSession().setAttribute("user", user);
 						
 					}
 				}

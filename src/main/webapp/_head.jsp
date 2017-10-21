@@ -21,8 +21,8 @@
 			<a href="${appPath}/regist.jsp">注册</a>
 			
 		<%} %> --%>
-		<c:if test="${sessionScope.username != null }" var="flag">
-			欢迎&nbsp;${sessionScope.username }&nbsp;&nbsp;|&nbsp;<a href="${appPath}/servlet/LogoutServlet">注销</a>
+		<c:if test="${sessionScope.user != null }" var="flag">
+			欢迎&nbsp;${sessionScope.user.username }&nbsp;&nbsp;|&nbsp;<a href="${appPath}/servlet/LogoutServlet">注销</a>
 		</c:if>		
 		<c:if test="${!flag }">
 			<a href="${appPath}/login.jsp">登录</a>&nbsp;&nbsp;|&nbsp;&nbsp;

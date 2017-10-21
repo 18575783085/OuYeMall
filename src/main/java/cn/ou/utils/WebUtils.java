@@ -3,7 +3,7 @@ package cn.ou.utils;
 public class WebUtils {
 	private WebUtils(){}
 	
-	/**
+	/** 
 	 * 判断字符串是否为空（null 或者 ""）
 	 * @param str
 	 * @return true:表示字符串为空
