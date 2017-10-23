@@ -47,7 +47,7 @@ public class PropUntils {
 	}
 
 	/**
-	 * 获取properties配置文件中内容
+	 * 通过p对象来获取properties配置文件中参数
 	 * @param key ： 配置文件中的key值
 	 * @return 对应key的value值
 	 */

@@ -6,6 +6,7 @@ import java.util.List;
 
 import cn.ou.dao.ProdDao;
 import cn.ou.entity.Product;
+import cn.ou.utils.BeanHandler;
 import cn.ou.utils.BeanListHandler;
 import cn.ou.utils.DaoUtils;
 /**
@@ -115,6 +116,26 @@ public class ProdDaoImpl implements ProdDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return new ArrayList<Product>();
+		}
+	}
+
+	/**
+	 * 根据商品id查询对应商品的详细信息的业务逻辑
+	 */
+	public Product findProdById(String id) {
+		//1.编写sql语句
+		String sql = "select * from products where id=?";
+		
+		try {
+			//2.执行sql语句，获取商品对象
+			Product prod = DaoUtils.query(sql, new BeanHandler<Product>(Product.class), id);
+			
+			//3.返回对应商品的结果
+			return prod;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//4.查无此信息
+			return null;
 		}
 	}
 

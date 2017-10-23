@@ -60,4 +60,11 @@ public class ProdServiceImpl implements ProdService {
 		return prodDao.findAllById(name,cate,min,max);
 	}
 
+	/**
+	 * 调用dao的根据商品id查询对应商品的详细信息的方法
+	 */
+	public Product findProdById(String id) {
+		return prodDao.findProdById(id);
+	}
+
 }

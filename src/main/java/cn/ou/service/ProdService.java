@@ -42,5 +42,13 @@ public interface ProdService {
 	public List<Product> findAllById(String name, String cate, Double min, Double max);
 
 	
+	/**
+	 * 根据商品id查询对应商品的详细信息对象
+	 * @param id : 商品id
+	 * @return 对应商品的详细信息
+	 */
+	public Product findProdById(String id);
+
+	
 
 }

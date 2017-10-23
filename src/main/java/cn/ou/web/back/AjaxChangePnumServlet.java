@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import cn.ou.factory.BasicFactory;
 import cn.ou.service.ProdService;
 /**
- * 修改商品库存数量
+ * 后台商品管理---修改商品库存数量
  * @author Administrator
  *
  */

@@ -13,7 +13,7 @@ import cn.ou.factory.BasicFactory;
 import cn.ou.service.ProdService;
 /**
  * 后台商品管理-----添加、删除、修改商品 
- * @author Administrator
+ * @author Administrator 
  *
  */
 public class BackProdListServlet extends HttpServlet {

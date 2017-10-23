@@ -32,7 +32,7 @@ public class User {
 	/**
 	 * 用户的手机号码(唯一)
 	 */
-	private String phone;
+	private String phonenumber;
 	
 	//参数改造
 	/**
@@ -49,7 +49,7 @@ public class User {
 	private String valistr;
 	
 	/**
-	 * 非空校验方法
+	 * 非空和数据校验方法
 	 * @throws MsgException 
 	 */
 	public void check() throws MsgException{
@@ -75,7 +75,7 @@ public class User {
 			//如果用户名为空，跳转回注册页面提示用户“用户名不能为空！”
 			throw new MsgException( "邮箱不能为空！");
 		}
-		if(WebUtils.isNull(phone)){
+		if(WebUtils.isNull(phonenumber)){
 			//如果用户名为空，跳转回注册页面提示用户“用户名不能为空！”
 			throw new MsgException( "手机号码不能为空！");
 		}
@@ -101,7 +101,7 @@ public class User {
 		
 		//3.4判断验证码是否一致（根据 手机 获取的 验证码，再进行 判断）
 		//3.4.1.判断手机号码是否是11位
-		if(!phone.matches("^1[3|5|8][0-9]{9}$")){
+		if(!phonenumber.matches("^1[3|5|8][0-9]{9}$")){
 			throw new MsgException("手机号码格式不正确！");
 		}
 	}
@@ -154,10 +154,10 @@ public class User {
 		this.email = email;
 	}
 	public String getPhone() {
-		return phone;
+		return phonenumber;
 	}
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setPhone(String phonenumber) {
+		this.phonenumber = phonenumber;
 	}
 	
 	

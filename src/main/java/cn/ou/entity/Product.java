@@ -1,11 +1,13 @@
 package cn.ou.entity;
 
+import java.io.Serializable;
+
 /**
  * 商品参数
  * @author Administrator
  *
  */
-public class Product {
+public class Product implements Serializable {
 	/**
 	 * 商品id
 	 */
@@ -34,6 +36,45 @@ public class Product {
 	 * 商品描述
 	 */
 	private String description;
+	
+	
+	/**
+	 * 重写hashCode值:只要id相同，hashCode的值肯定相同
+	 */
+	public int hashCode() {
+		return id == null ? 0:id.hashCode();
+	}
+	
+	/**
+	 * 重写equals方法
+	 */
+	public boolean equals(Object obj) {
+		if(this == obj){
+			return true;
+		}
+		if(obj == null){
+			 return false;
+		}
+		
+		//判断obj是否为Product
+		if(!(obj instanceof Product)){
+			//obj不是Product类的对象
+			return false;
+		}
+		
+		//说明obj是Product类创建的对象
+		Product other = (Product) obj;
+		if(id != null && id.equals(other.getId())){
+			//说明两个对象id相同
+			return true;
+		}
+		return false;
+		
+	}
+	
+	
+	
+	
 	public String getId() {
 		return id;
 	}

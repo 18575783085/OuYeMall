@@ -37,7 +37,7 @@
 		<input type="button" value="搜 索"/>
 		<span id="goto">
 			<a id="goto_order" href="#">我的订单</a>
-			<a id="goto_cart" href="#">我的购物车</a>
+			<a id="goto_cart" href="${appPath }/cart.jsp">我的购物车</a>
 		</span>
 		<img id="erwm" src="${appPath}/img/head/qr.jpg"/>
 	</div>

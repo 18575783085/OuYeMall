@@ -31,6 +31,7 @@ public class UserDaoFactory {
 			//通过加载类字节文件来获取该对象的实例
 			Class clz = Class.forName(value);
 			
+			//返回类的实例对象
 			return (UserDao) clz.newInstance();
 		} catch (Exception e) {
 			e.printStackTrace();

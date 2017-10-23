@@ -1,6 +1,7 @@
 package cn.ou.web;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.beanutils.BeanUtils;
 
 import cn.ou.entity.User;
 import cn.ou.factory.BasicFactory;
@@ -38,9 +41,22 @@ public class LoginServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");*/ 
 		
 		//2.获取登录信息
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
+		/*String username = request.getParameter("username");
+		String password = request.getParameter("password");*/
 		String remname = request.getParameter("remname");
+		
+		//2.接收参数
+		//2.1获取登录用户信息
+		User user = new User();
+		
+		try {
+			BeanUtils.populate(user, request.getParameterMap());
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		
 		
 		//3.登录用户（根据用户名和密码查询用户）
 		/*由于用户的密码加密存放到数据，所以先查询该用户的密码，
@@ -61,7 +77,7 @@ public class LoginServlet extends HttpServlet {
 		//A2.调用业务层方法
 		//由于注册时使用了MD5加密，所以登录时，先将用户输入的密码进行加密，再跟数据库的密码进行匹配
 		//password = MD5Utils.md5(password);
-		User user = userService.login(username,password);
+		user = userService.login(user.getUsername(),user.getPassword());
 		
 		//A3.判断登陆是否成功
 		if(user == null){
@@ -74,7 +90,7 @@ public class LoginServlet extends HttpServlet {
 			if("true".equals(request.getParameter("autologin"))){//勾选
 				//创建Cookie对象,把用户名和密码存进Cookie
 				Cookie autoLoginCK = new Cookie("autologin", 
-						URLEncoder.encode(username+","+password,"UTF-8"));
+						URLEncoder.encode(user.getUsername()+","+user.getPassword(),"UTF-8"));
 				/*
 				 * Cookie autoLoginCK = new Cookie("autologin", username+","+password);
 				 * 异常：java.lang.IllegalArgumentException: Control character in cookie value or attribute.
@@ -96,7 +112,7 @@ public class LoginServlet extends HttpServlet {
 			if("true".equals(remname)){//3.2.3.1.如果勾选记住用户名
 				
 				//3.2.1.1.将用户名进行url编码之后再存入Cookie中
-				Cookie cookie = new Cookie("remname", URLEncoder.encode(username, "utf-8"));
+				Cookie cookie = new Cookie("remname", URLEncoder.encode(user.getUsername(), "utf-8"));
 				
 				//3.2.1.2.设置Cookie的最大存活时间
 				cookie.setMaxAge(3600 * 24 * 30);//30天
