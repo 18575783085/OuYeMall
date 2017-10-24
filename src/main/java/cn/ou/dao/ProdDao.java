@@ -1,12 +1,13 @@
 package cn.ou.dao;
 
+import java.sql.Connection;
 import java.util.List;
 
 import cn.ou.entity.Product;
 
 /**
  * 商品Dao层接口
- * 实现数据库语句
+ * 数据库语句
  * @author Administrator
  *
  */
@@ -49,5 +50,23 @@ public interface ProdDao {
 	 * @return 返回商品的详细信息对象
 	 */
 	public Product findProdById(String id);
+
+	
+	/**
+	 * 根据商品id查询商品的详细信息（事务版）
+	 * @param conn ：数据库连接对象
+	 * @param product_id ： 商品id
+	 * @return 对象商品的详细信息
+	 */
+	public Product findProdById(Connection conn, String product_id);
+
+	/**
+	 * 修改商品的库存数量（事务版）
+	 * @param conn ：数据库连接对象
+	 * @param id ：商品的id
+	 * @param pnum : 修改后的商品库存
+	 * @return : 返回影响的行数 
+	 */
+	public int changePnum(Connection conn, String id, int pnum);
 
 }

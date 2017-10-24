@@ -4,7 +4,7 @@ import cn.ou.exception.MsgException;
 import cn.ou.utils.WebUtils;
 
 /** 
- * 注册页面的主要参数的对象
+ * 注册页面的主要参数的对象实体类
  * @author Administrator
  *
  */

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import cn.ou.entity.Product;
 
 /**
- * 修改购物车商品数量-----增加商品
+ * 修改购物车商品数量-----增加商品('+'和'-'按钮)
  * @author Administrator
  *
  */

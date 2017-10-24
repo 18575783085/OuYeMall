@@ -3,7 +3,7 @@ package cn.ou.entity;
 import java.io.Serializable;
 
 /**
- * 商品参数
+ * 商品参数实体类
  * @author Administrator
  *
  */

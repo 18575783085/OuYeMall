@@ -1,5 +1,6 @@
 package cn.ou.dao.impl;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -137,6 +138,46 @@ public class ProdDaoImpl implements ProdDao {
 			//4.查无此信息
 			return null;
 		}
+	}
+
+	/**
+	 * 根据商品id查询对应商品的详细信息的业务逻辑(事务版)
+	 */
+	public Product findProdById(Connection conn, String product_id) {
+		//1.编写sql语句
+		String sql = "select * from products where id=?";
+		
+		try {
+			//2.执行sql查询方法,获取对象
+			List<Product> prod = DaoUtils.query(conn, sql, new BeanListHandler<Product>(Product.class),product_id);
+			
+			//3.返回商品对象
+			return (Product) prod;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * 修改商品库存数据的业务逻辑(事务版)
+	 */
+	public int changePnum(Connection conn, String id, int pnum) {
+		//1.编写sql语句
+		String sql = "update products set pnum=? where id=?";
+		
+		try {
+			//2.执行sql语句，获取影响行数
+			int row = DaoUtils.update(conn, sql, pnum,id);
+			
+			//3.返回影响行数
+			return row;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		
 	}
 
 }
