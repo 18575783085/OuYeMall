@@ -141,26 +141,6 @@ public class ProdDaoImpl implements ProdDao {
 	}
 
 	/**
-	 * 根据商品id查询对应商品的详细信息的业务逻辑(事务版)
-	 */
-	public Product findProdById(Connection conn, String product_id) {
-		//1.编写sql语句
-		String sql = "select * from products where id=?";
-		
-		try {
-			//2.执行sql查询方法,获取对象
-			List<Product> prod = DaoUtils.query(conn, sql, new BeanListHandler<Product>(Product.class),product_id);
-			
-			//3.返回商品对象
-			return (Product) prod;
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	/**
 	 * 修改商品库存数据的业务逻辑(事务版)
 	 */
 	public int changePnum(Connection conn, String id, int pnum) {
@@ -180,4 +160,46 @@ public class ProdDaoImpl implements ProdDao {
 		
 	}
 
+	/**
+	 * 根据商品id查询对应商品的详细信息的业务逻辑(事务版)
+	 */
+	public Product findProdById(Connection conn, String product_id) {
+		//1.编写sql语句
+		String sql = "select * from products where id=?";
+		
+		try {
+			//2.执行sql查询方法,获取对象----根据商品id查询单个商品的信息
+			Product prod = DaoUtils.query(conn, sql, new BeanHandler<Product>(Product.class),product_id);
+			
+			//3.返回单个商品对象的信息
+			return prod;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * 根据商品id和购买商品的数量来更新(还原)该商品的库存的业务逻辑（事务版）
+	 */
+	public int updatePnum(Connection conn, String product_id, int buynum) {
+		//1、编写sql语句
+		String sql = "update products " +
+					"set pnum=pnum+? " +
+					"where id=?";
+		
+		try {
+			//2、执行sql语句，获取影响行数
+			int row = DaoUtils.update(conn, sql, buynum,product_id);
+			
+			//3、返回影响行数
+			return row;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//3、如果更新失败
+			return 0;
+		}
+		
+	}
 }

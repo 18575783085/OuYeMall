@@ -42,4 +42,6 @@ public interface UserDao {
 	 */
 	public boolean checkPhone(String phone);
 
+	
+
 }

@@ -48,6 +48,7 @@ public class CartAddServlet extends HttpServlet {
 		if(cartObj == null){
 			//首次购买商品
 			cart = new HashMap<Product, Integer>();
+			//把购物车存进session域中
 			request.getSession().setAttribute("cart", cart);
 			
 		}else {
@@ -57,7 +58,7 @@ public class CartAddServlet extends HttpServlet {
 		
 		//5.将prod 和buynum保存到cart中
 		if(cart.containsKey(prod)){
-			//当前商品已经购买过
+			//当前商品已经购买过---同样的商品的数量加一
 			cart.put(prod, cart.get(prod)+buynum);
 		}else {
 			//当前上未购买过商品

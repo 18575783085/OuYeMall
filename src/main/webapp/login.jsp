@@ -12,7 +12,7 @@
 		 	$(function(){
 		 		/*  步骤：获取值--->转码--->赋值 */
 		 		//获取username对应的输入框
-		 		$ipt = ${"input[name=username]"}[0];
+		 		$ipt = $("input[name=username]");
 		 		//转码
 		 		var usernameval = decodeURI($ipt.val());
 		 		
@@ -54,7 +54,7 @@
 				<tr>
 					<td class="tdx">用户名：</td>
 					<td><input type="text" name="username"
-							value="${cookie.remname.value} }"/></td>
+							value="${cookie.remname.value }"/></td>
 				</tr>
 				<tr>
 					<td class="tdx">密&nbsp;&nbsp; 码：</td>
@@ -63,7 +63,7 @@
 				<tr>
 					<td colspan="2">
 						<input type="checkbox" name="remname" value="true"
-							${empty cookie.remname ? "" : "checked = 'checked'" }
+							${empty cookie.remname ? "" : "checked = 'checked'"}
 						/>记住用户名
 						<input type="checkbox" name="autologin" value="true"/>30天内自动登陆
 					</td>

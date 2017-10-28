@@ -43,3 +43,7 @@ ul li{list-style:none;}
 	border-bottom: 1px solid #CCC;
 	
 }
+
+dl,table,.Order_price{
+	margin:0 auto;
+}

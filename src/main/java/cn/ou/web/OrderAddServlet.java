@@ -41,11 +41,13 @@ public class OrderAddServlet extends HttpServlet {
 			return;
 		}
 		
-		//2.获取购物车对象
+		//2.从session域中---获取购物车对象
 		Object cartObj = request.getSession().getAttribute("cart");
 		
 		//2.1判断购物车是否为空
 		if(cartObj == null){//为null
+			//跳转回到首页
+			response.getWriter().write("alert('您的购物车空，请您回到商城尽情扫货吧！！！')");
 			response.sendRedirect(request.getContextPath()+"/index.jsp");
 			return;
 		}
@@ -90,11 +92,11 @@ public class OrderAddServlet extends HttpServlet {
 			//4.6.2获取商品id
 			orderItem.setProduct_id(entry.getKey().getId());
 			
-			//4.6.3获取订单商品数量
+			//4.6.3获取订单商品数量------获取每一个商品的所购买数量
 			orderItem.setBuynum(entry.getValue());
 			
 			//4.6.4计算商品总金额=单价*数量
-			money = entry.getKey().getPrice()*entry.getValue();
+			money = money+entry.getKey().getPrice()*entry.getValue();
 			
 			//4.7将订单列表添加到集合
 			oiList.add(orderItem);
@@ -118,7 +120,7 @@ public class OrderAddServlet extends HttpServlet {
 			//7.2提示添加成功
 			response.getWriter().write("<font style='color:red'>订单添加成功，"+"3秒后自动跳转</font>");
 			
-			//7.3设置定时刷新---跳转到订单列表
+			//7.3设置定时刷新---跳转到订单列表:OrderListServlet
 			response.setHeader("refresh", "3;url="+request.getContextPath()+"/OrderListServlet");
 			
 		} catch (MsgException e) {

@@ -15,7 +15,7 @@
 			<h3>增加订单</h3>
 			<div id="forminfo">
 				<span class="lf">收货地址：</span> <label for="textarea"></label>
-				<textarea name=receiverinfo id="textarea" cols="45" rows="5"></textarea>
+				<textarea name=receiverinfo id="textarea" cols="45" rows="5" value="${requestScope.receiverinfo }"></textarea>
 				<br> 支付方式：<input name="paystate" type="radio" value="" checked="checked">&nbsp;在线支付
 			</div>
 			<table width="1200" height="80" border="1" cellpadding="0" cellspacing="0" bordercolor="#d8d8d8">

@@ -69,4 +69,13 @@ public interface ProdDao {
 	 */
 	public int changePnum(Connection conn, String id, int pnum);
 
+	/**
+	 * 还原商品的库存（事务版）
+	 * @param conn ：数据库连接对象
+	 * @param product_id ：商品的id
+	 * @param buynum ：还原的增量
+	 * @return 影响的行数
+	 */
+	public int updatePnum(Connection conn, String product_id, int buynum);
+
 }

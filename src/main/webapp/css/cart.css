@@ -7,8 +7,12 @@
 {
 	border: 1px solid red;
 }
-
-
+/* 为了让span能设置宽高 */
+.warp #title span,.warp #prods span,.warp #total span{
+ 	display:inline-block;
+ 	text-align:center;
+ 	width:80px;
+}
 /*购物车样式*/
 /*标题行*/
 #title{
@@ -24,22 +28,30 @@
 	vertical-align: middle;
 }
 #title #title_checkall_text{
-	margin-left:3px;
+    margin-left:3px;
+    width:30px;
+}
+#title #title_img{
+	margin-left:35px;
+/* 	width:70px; */
 }
 #title #title_name{
-	margin-left:210px;
+	/* margin-left:210px; */
+	margin-left:85px;
+	
 }
 #title #title_price{
-	margin-left:180px;
+	margin-left:90px;
+	
 }
 #title #title_buynum{
-	margin-left:150px;
+	margin-left:120px;
 }
 #title #title_money{
-	margin-left:125px;
+	margin-left:120px;
 }
 #title #title_del{
-	margin-left:95px;
+	margin-left:114px;
 }
 /*购物车商品列表*/
 #prods{
@@ -48,27 +60,42 @@
 	background-color: #FEF4E8;
 	border-top: 1px solid #ABAAA8;
 	height:100px;
-	line-height:100px;
+	/* line-height:100px; */
 }
 #prods img ,#prods span{
 	vertical-align: middle;
+	
 }
+#prods:hover{
+	backgroud-color:#F0F8FF;
+}
+#prods img{
+	margin-top:5px;
+}
+
 #prods input[name='prodC']{
 	margin-left:40px;
 }
 
 #prods img{
-	margin-left:30px;
+	margin-left:65px;
 	margin-bottom:4px;
 	border: 1px solid #DEDEDE;
 }
 
 #prods #prods_name{
 	margin-left:80px;
+	text-align:center;
+	width:80px;
+	/* word-break:break-all;
+	word-wrap:break-word; */
+	
 }
 
 #prods #prods_price{
-	margin-left:190px;
+	margin-left:100px;
+	width:40px;
+	
 }
 
 #prods #prods_buynum a{
@@ -77,7 +104,8 @@
 	text-decoration: none;
 }
 #prods #prods_buynum{
-	margin-left:135px;
+	margin-left:130px;
+	width:130px;
 }
 #prods #prods_buynum #buyNumInp{
 	width:60px;
@@ -104,9 +132,11 @@
 
 #prods #prods_money{
 	margin-left:85px;
+	width:80px;
 }
 #prods #prods_del{
 	margin-left:120px;
+	width:80px;
 }
 #prods #prods_del a{
 	text-decoration:none;
@@ -130,16 +160,22 @@
 #total #total_1 input[name='allC']{
 	margin-left:40px;
 }
+
+#total #total_all{
+	width:30px;
+}
+
 #total #total_1 #del_a{
-	margin-left: 15px;
+	margin-left: 30px;
 	text-decoration: none;
 }
 #total #total_1 #span_1{
-	margin-left:720px;
+	margin-left:630px;
 }
 #total #total_1 #span_2{
 	font-size: 25px;
 	color:#FF0000;
+	width:50px;
 }
 #total #total_2 a{
 	float:right;
@@ -156,3 +192,6 @@
 #total #total_2 a:hover{
 	background-color: #DD4343;
 }
+
+
+

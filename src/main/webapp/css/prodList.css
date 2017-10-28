@@ -43,7 +43,7 @@ body{
 }
 /*商品信息*/
 #prod_content{
-	width:1200px;
+	width:1400px;
 }
 #prod_content #prod_div{
 	width:222px;
@@ -60,6 +60,7 @@ body{
 
 #prod_content #prod_div img{
 	width:100%; 
+	height: 220px;
 }
 #prod_content #prod_name_div{
 	font-size:12px;

@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-    	<title>我的购物车</title>
+    	<title>${sessionScope.user.username }的购物车</title>
 		<link href="${appPath }/css/cart.css" rel="stylesheet" type="text/css">
 		<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
 		<script type="text/javascript" src="${appPath }/js/jquery-1.4.2.js"></script>
@@ -93,10 +93,13 @@
 		<%@include file="_head.jsp" %>
 	
 		<div class="warp">
+			${msg }
+			
 			<!-- 标题信息 -->
 			<div id="title">
 				<input name="allC" type="checkbox" value="" onclick=""/>
 				<span id="title_checkall_text">全选</span>
+				<span id="title_img">商品图片</span>
 				<span id="title_name">商品</span>
 				<span id="title_price">单价（元）</span>
 				<span id="title_buynum">数量</span>
@@ -126,7 +129,7 @@
 			<div id="total">
 				<div id="total_1">
 					<input name="allC" type="checkbox" value=""/> 
-					<span>全选</span>
+					<span id="total_all">全选</span>
 					<a id="del_a" href="#">删除选中的商品</a>
 					<span id="span_1">总价：</span>
 					<span id="span_2">${money }</span>

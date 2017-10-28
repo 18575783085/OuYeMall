@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.ResultSetHandler;
+//import org.apache.commons.dbutils.QueryRunner;
+//import org.apache.commons.dbutils.ResultSetHandler;
 //import org.apache.commons.dbutils.handlers.BeanHandler;
 
 import cn.ou.dao.UserDao;
