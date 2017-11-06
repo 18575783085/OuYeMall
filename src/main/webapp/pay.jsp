@@ -11,13 +11,13 @@
 <body>
 	<%@include file="_head.jsp" %>
 
-	<form action="${appPath }/payServlet" method="post">
+	<form action="${appPath }/PayServlet" method="post">
 		<dl class="payment_page">
 			<dt>
 				<strong>订单号：</strong> 
-				<input class="idinp" name="orderid" readonly="readonly" type="text" value="">
+				<input class="idinp" name="orderid" readonly="readonly" type="text" value="${param.id }">
 				<strong>支付金额：</strong>
-				<input class="moneyinp" name="" type="text" readonly="readonly" type="text" value="">元
+				<input class="moneyinp" name="" type="text" readonly="readonly" type="text" value="${param.money }">元
 			</dt>
 			<dd class="payment_page_name">
 				<strong>请您选择在线支付银行 :</strong>

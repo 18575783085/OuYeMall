@@ -14,6 +14,7 @@ import cn.ou.entity.OrderInfo;
 import cn.ou.entity.OrderItem;
 import cn.ou.entity.Orders;
 import cn.ou.entity.Product;
+import cn.ou.entity.SaleInfo;
 import cn.ou.exception.MsgException;
 import cn.ou.factory.BasicFactory;
 import cn.ou.service.OrderService;
@@ -231,6 +232,13 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	public void changePaystate(String oid, int paystate) {
 		orderDao.changePaystate(oid,paystate);
+	}
+
+	/**
+	 * 查询订单列表的销售信息
+	 */
+	public List<SaleInfo> findSaleInfos() {
+		return orderDao.findeSaleInfos();
 	}
 
 }

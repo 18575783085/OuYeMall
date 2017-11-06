@@ -182,11 +182,11 @@ public class UserDaoImpl implements UserDao {
 			/*版本2*/
 			//1.编写sql语句
 			String sql = "insert into user " +
-					"(username,password,nickname,email,phone)" +
+					"(username,password,nickname,email,role,phone)" +
 					"values" +
-					"(?,?,?,?,?)";
+					"(?,?,?,?,?,?)";
 			//2.执行sql语句并返回结果
-			int updateRow = DaoUtils.update(sql, user.getUsername(),user.getPassword(),user.getNickname(),user.getEmail(),user.getPhone());
+			int updateRow = DaoUtils.update(sql, user.getUsername(),user.getPassword(),user.getNickname(),user.getEmail(),user.getRole(),user.getPhone());
 			
 			//3.返回结果(影响行数)--->有影响行数表示插入成功-->反之则插入失败
 			return updateRow;

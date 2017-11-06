@@ -1,14 +1,49 @@
 ﻿body{
-	background-image: url("../img/login/dl.jpg");
-	background-position: top;
+/* 	background-image: url("../img/login/dl.jpg");
+	background-position: top; */
 	font-family: "微软雅黑";
 }
+/* 动画背景样式 */
+.video-player{
+	background-color: transparent;
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+	weight: auto;
+	height: auto;
+	z-index: -9999;
+}
+.video_mask{ 
+	width:100%; 
+	height:100%; 
+	position:absolute; 
+	left:0; 
+	top:0; 
+	z-index:90; 
+	background-color:rgba(0,0,0,0.5); 
+}
+.login{
+	 height:300px;
+	 width:350px;
+	 padding: 20px;
+	 background-color:rgba(0,0,0,0.5);
+	 border-radius: 4px;
+	 position:absolute;
+	 left: 50%;
+	 top: 45%; 
+	 margin:-150px 0 0 -150px;
+	 z-index:99;
+}
+
 h1{
 	width:300px;
-	margin:210px auto 0px;
+	margin:0px auto 0px;
 	text-align: center;
 	color:#990000;
-	font-size:27px;
+	font-size:33px;
+	text-aligh:center;
 }
 form{
 	width:400px;
@@ -24,6 +59,8 @@ form input[type='text'],form input[type='password']{
 
 table{
 	margin:0px auto 0px;
+	margin-left:50px;
+	color:#fff;
 }
 td{
 	padding-top:10px;

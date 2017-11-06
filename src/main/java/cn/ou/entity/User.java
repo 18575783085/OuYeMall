@@ -33,6 +33,10 @@ public class User {
 	 * 用户的手机号码(唯一)
 	 */
 	private String phonenumber;
+	/**
+	 * 用户权限角色
+	 */
+	private String role;
 	
 	//参数改造
 	/**
@@ -105,6 +109,18 @@ public class User {
 			throw new MsgException("手机号码格式不正确！");
 		}
 	}
+	
+	
+	public String getRole() {
+		return role;
+	}
+
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+
 	public String getPassword2() {
 		return password2;
 	}

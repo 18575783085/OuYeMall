@@ -11,6 +11,17 @@
 	</listener>
   
    <filter>
+   		<description>用来管理用户的权限</description>
+   		<filter-name>RoleFilter</filter-name>
+   		<filter-class>cn.ou.filter.RoleFilter</filter-class>
+   </filter>
+   <filter-mapping>
+   		<filter-name>RoleFilter</filter-name>
+   		<url-pattern>/*</url-pattern>
+   </filter-mapping>
+   
+   
+   <filter>
 		<description>解决全站乱码过滤器</description>
 		<filter-name>EncodeFilter</filter-name>
 		<filter-class>cn.ou.filter.EncodeFilter</filter-class>
@@ -126,6 +137,16 @@
     <servlet-name>CallBackServlet</servlet-name>
     <servlet-class>cn.ou.web.CallBackServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>SaleInfoListServlet</servlet-name>
+    <servlet-class>cn.ou.web.back.SaleInfoListServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>DownLoadSaleServlet</servlet-name>
+    <servlet-class>cn.ou.web.back.DownLoadSaleServlet</servlet-class>
+  </servlet>
+
+
 
 
 
@@ -233,6 +254,14 @@
   <servlet-mapping>
     <servlet-name>CallBackServlet</servlet-name>
     <url-pattern>/CallBackServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SaleInfoListServlet</servlet-name>
+    <url-pattern>/back/SaleInfoListServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DownLoadSaleServlet</servlet-name>
+    <url-pattern>/back/DownLoadSaleServlet</url-pattern>
   </servlet-mapping>	
   
   <welcome-file-list>

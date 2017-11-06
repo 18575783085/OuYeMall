@@ -28,13 +28,14 @@ public class PayServlet extends HttpServlet {
 			// 订单id
 			String p2_Order = request.getParameter("orderid");
 			// 订单金额：
-			//String p3_Amt ="0.01";
-			// 测试时使用//正式使用
-			//创建订单业务层
+			String p3_Amt ="0.01";// 测试时使用
+			
+			//正式使用
+			/*//创建订单业务层
 			OrderService orderService = BasicFactory.getBasicFactory().getInstance(OrderService.class);
 			//调用通过订单id查询订单信息的方法
 			Orders orders = orderService.findOrderByOid(p2_Order);
-			String p3_Amt = orders.getMoney()+"";
+			String p3_Amt = orders.getMoney()+"";*/
 			// 交易币种
 			String  p4_Cur = "CNY";
 			// 商品名称

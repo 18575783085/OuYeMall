@@ -45,7 +45,7 @@
 			<div><a href="prod_list.html" target="rightFrame">&gt; 用户管理</a></div>
 			<div><a href="prod_list.html" target="rightFrame">&gt; 权限管理</a></div>
 			<div><a href="prod_list.html" target="rightFrame">&gt; 订单管理</a></div>
-			<div><a href="prod_list.html" target="rightFrame">&gt; 销售榜单</a></div>
+			<div><a href="${appPath }/back/SaleInfoListServlet" target="rightFrame">&gt; 销售榜单</a></div>
 		</div>		
 	</body>
 </html>

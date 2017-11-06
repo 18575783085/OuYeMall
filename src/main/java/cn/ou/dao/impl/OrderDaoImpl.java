@@ -8,6 +8,7 @@ import java.util.List;
 import cn.ou.dao.OrderDao;
 import cn.ou.entity.OrderItem;
 import cn.ou.entity.Orders;
+import cn.ou.entity.SaleInfo;
 import cn.ou.utils.BeanHandler;
 import cn.ou.utils.BeanListHandler;
 import cn.ou.utils.DaoUtils;
@@ -199,14 +200,38 @@ public class OrderDaoImpl implements OrderDao {
 	public void changePaystate(String oid, int paystate) {
 		//1.编写sql语句
 		String sql = "update orders "
-				+ "set paystate=? "
-				+ "where id=?";
+				+ "set paystate=?"
+				+ " where id=?";
 		
 		try {
 			//2.执行sql语句
 			DaoUtils.update(sql, paystate,oid);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 查询全部销售榜单列表的业务逻辑
+	 */
+	public List<SaleInfo> findeSaleInfos() {
+		//1.编写sql语句
+		String sql = "select pd.id prod_id,pd.name prod_name,SUM(oi.buynum) sale_num from " +
+				"products pd,orderitem oi,orders od " +
+				"where pd.id = oi.product_id " +
+				"and oi.order_id = od.id " +
+				"and od.paystate = 1 " +
+				"group by pd.id " +
+				"order by sale_num desc";
+		try {
+			//2.执行sql语句，获取结果
+			List<SaleInfo> saleList = DaoUtils.query(sql, new BeanListHandler<SaleInfo>(SaleInfo.class));
+			
+			return saleList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//如果查询无结果，为了防止空指针，所以返回一个新的集合
+			return new ArrayList<SaleInfo>();
 		}
 	}
 

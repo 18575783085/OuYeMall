@@ -5,6 +5,7 @@ import java.util.List;
 
 import cn.ou.entity.OrderItem;
 import cn.ou.entity.Orders;
+import cn.ou.entity.SaleInfo;
 
 /**
  * 订单Dao层接口
@@ -85,6 +86,12 @@ public interface OrderDao {
 	 * @param paystate：修改后的订单状态
 	 */
 	void changePaystate(String oid, int paystate);
+
+	/**
+	 * 查询全部的销售榜单列表
+	 * @return 全部的销售榜单
+	 */
+	List<SaleInfo> findeSaleInfos();
 
 
 

@@ -5,6 +5,7 @@ import java.util.List;
 import cn.ou.entity.OrderInfo;
 import cn.ou.entity.OrderItem;
 import cn.ou.entity.Orders;
+import cn.ou.entity.SaleInfo;
 import cn.ou.exception.MsgException;
 
 /**
@@ -49,5 +50,11 @@ public interface OrderService {
 	 * @param paystate：修改后的支付状态
 	 */
 	public void changePaystate(String oid, int paystate);
+
+	/**
+	 * 查询全部的销售榜单列表
+	 * @return 全部的销售榜单
+	 */
+	public List<SaleInfo> findSaleInfos();
 
 }

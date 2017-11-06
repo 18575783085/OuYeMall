@@ -41,8 +41,18 @@ public class BeanListHandler<T> implements ResultSetHandler<List<T>>{
 					//获取set方法
 					Method setMethod = pd.getWriteMethod();
 					try {
+						Object obj = null;
+						/*
+						 * 由于BigDecimal和Integer类都是Number类子类，所以他们两个既不能自动类型也不能强制类型转换。
+						 */
+						if(pd.getPropertyType() == int.class){
+							obj = rs.getInt(name);
+						}else {
+							obj = rs.getObject(name);
+						}
 						//执行set方法
-						setMethod.invoke(t, rs.getObject(name));
+						setMethod.invoke(t, obj);
+					
 					} catch (SQLException e) {
 						continue;
 					}
